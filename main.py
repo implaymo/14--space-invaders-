@@ -17,7 +17,7 @@ while running:
 
     screen.blit(spaceship.spaceship_resized, (spaceship.spaceship_x_pos, spaceship.spaceship_y_pos))
 
-    spaceship.move_spaceship()
+    spaceship.move_spaceship(screen=screen)
     pygame.display.update()
 
     pygame.display.flip()
