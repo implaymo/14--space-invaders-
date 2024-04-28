@@ -12,11 +12,12 @@ spaceship = SpaceShipImg()
 
 
 all_bullets = []
+bullet_speed_multiplier = 10
+
 
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            print(all_bullets)
             running = False
     
     key = pygame.key.get_pressed()
@@ -27,14 +28,14 @@ while running:
 
     for bullet in all_bullets:
         if bullet.bullet_y_pos > 0:
-            bullet.bullet_y_pos += bullet.direction * 8
+            bullet.bullet_y_pos += bullet.direction * bullet_speed_multiplier
             bullet.draw_bullet(screen)
         else:
             all_bullets.pop(all_bullets.index(bullet))
 
     if key[pygame.K_SPACE]:
         if len(all_bullets) < 1:
-            all_bullets.append(Bullet(bullet_x_pos=spaceship.spaceship_x_pos + 20, bullet_y_pos=spaceship.spaceship_y_pos + 20))
+            all_bullets.append(Bullet(bullet_x_pos=spaceship.spaceship_x_pos + 20, bullet_y_pos=spaceship.spaceship_y_pos + 10))
         
 
     if key[pygame.K_UP]:
