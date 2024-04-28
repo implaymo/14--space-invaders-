@@ -27,15 +27,14 @@ while running:
 
     for bullet in all_bullets:
         if bullet.bullet_y_pos > 0:
-            bullet.bullet_y_pos += bullet.direction
+            bullet.bullet_y_pos += bullet.direction * 8
             bullet.draw_bullet(screen)
         else:
-            all_bullets.pop(bullet)
+            all_bullets.pop(all_bullets.index(bullet))
 
     if key[pygame.K_SPACE]:
         if len(all_bullets) < 1:
             all_bullets.append(Bullet(bullet_x_pos=spaceship.spaceship_x_pos + 20, bullet_y_pos=spaceship.spaceship_y_pos + 20))
-            print(all_bullets)
         
 
     if key[pygame.K_UP]:
