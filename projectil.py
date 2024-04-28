@@ -1,7 +1,7 @@
 import pygame
 
 class Bullet():
-    def __init__(self, bullet_x_pos, bullet_y_pos) -> None:
+    def __init__(self,  bullet_x_pos, bullet_y_pos) -> None:
         self.direction = -1
         self.bullet_x_pos = bullet_x_pos
         self.bullet_y_pos = bullet_y_pos
