@@ -15,9 +15,14 @@ class SpaceShipImg():
 
     def move_spaceship(self, key):
         if key[pygame.K_LEFT]:
-           self.spaceship_x_pos -= 5
+            self.spaceship_x_pos -= 5
+            if self.spaceship_x_pos < 0:
+                self.spaceship_x_pos = 0
         if key[pygame.K_RIGHT]:
-           self.spaceship_x_pos += 5
+            self.spaceship_x_pos += 5
+            if self.spaceship_x_pos > 560:
+                self.spaceship_x_pos = 560
+
 
 
 

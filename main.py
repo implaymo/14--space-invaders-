@@ -1,6 +1,7 @@
 import pygame 
 from spaceship import SpaceShipImg
 from projectil import Bullet
+from aliens import AlienImg
 
 pygame.init()
 screen = pygame.display.set_mode((600,400))
@@ -9,6 +10,7 @@ running = True
 pygame.display.set_caption("Space Invaders")
 
 spaceship = SpaceShipImg()
+alien = AlienImg()
 
 
 all_bullets = []
@@ -25,6 +27,8 @@ while running:
 
     screen.blit(spaceship.spaceship_resized, (spaceship.spaceship_x_pos, spaceship.spaceship_y_pos))
     spaceship.move_spaceship(key=key)
+
+    screen.blit(alien.alien_resized, (alien.alien_x_pos, alien.alien_y_pos))
 
     for bullet in all_bullets:
         if bullet.bullet_y_pos > 0:
