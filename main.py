@@ -12,14 +12,18 @@ pygame.display.set_caption("Space Invaders")
 spaceship = SpaceShipImg()
 
 all_aliens = []
-for i in range(20):
-    new_alien = all_aliens.append(AlienImg(x_pos=i*20, y_pos=100))
+number_rows = 5
+alien_start_y_pos = 70
+for row in range(number_rows):
+    for i in range(10):
+        x_pos = i*20
+        y_next_row_pos = (row * 20)
+        new_alien = all_aliens.append(AlienImg(x_pos=x_pos, y_pos=alien_start_y_pos + y_next_row_pos))
 
 
 all_bullets = []
 bullet_speed_multiplier = 10
-number_rows = 2
-number_columns = len(all_aliens)
+
 
 
 while running:
@@ -32,7 +36,6 @@ while running:
 
     screen.blit(spaceship.spaceship_resized, (spaceship.spaceship_x_pos, spaceship.spaceship_y_pos))
     spaceship.move_spaceship(key=key)
-
 
     for alien in all_aliens:
         screen.blit(alien.alien_resized, (alien.alien_x_pos, alien.alien_y_pos))

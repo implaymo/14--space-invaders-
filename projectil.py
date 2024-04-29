@@ -5,7 +5,7 @@ class Bullet():
         self.direction = -1
         self.bullet_x_pos = bullet_x_pos
         self.bullet_y_pos = bullet_y_pos
-        self.radius = 5
+        self.radius = 3
         self.color = "black"
         self.vel = self.direction
     
