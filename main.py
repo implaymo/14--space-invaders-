@@ -9,16 +9,6 @@ clock = pygame.time.Clock()
 running = True
 pygame.display.set_caption("Space Invaders")
 
-spaceship = SpaceShipImg()
-
-all_aliens = []
-number_rows = 5
-total_alien_per_row = 3
-alien_start_y_pos = 50
-y_gap_between_aliens = 20
-x_gap_between_aliens = 30
-
-
 def store_aliens():
     for row in range(number_rows):
         if row < number_rows:
@@ -35,7 +25,21 @@ def create_aliens():
         for alien in all_aliens[row]:
             screen.blit(alien.alien_resized, (alien.alien_x_pos, alien.alien_y_pos))
 
+def move_aliens():
+    for i in range(len(all_aliens)):
+        for j in range(len(all_aliens[i])):
+            if all_aliens[i][total_alien_per_row - 1].alien_x_pos < 580:
+                all_aliens[i][total_alien_per_row - 1].alien_x_pos += 1
 
+
+spaceship = SpaceShipImg()
+
+all_aliens = []
+number_rows = 5
+total_alien_per_row = 3
+alien_start_y_pos = 50
+y_gap_between_aliens = 20
+x_gap_between_aliens = 30
 
 store_aliens()
 all_bullets = []
@@ -55,6 +59,8 @@ while running:
     spaceship.move_spaceship(key=key)
 
     create_aliens()
+    move_aliens()
+
     
 
     for bullet in all_bullets:
