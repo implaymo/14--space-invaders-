@@ -10,3 +10,8 @@ class AlienImg():
         self.alien_x_pos = x_pos
         self.alien_y_pos = y_pos
         
+
+    def create_aliens(self, screen, list_aliens):
+        for row in range(len(list_aliens)):
+            for alien in list_aliens[row]:
+                screen.blit(alien.alien_resized, (alien.alien_x_pos, alien.alien_y_pos))

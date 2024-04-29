@@ -22,6 +22,10 @@ class SpaceShipImg():
             self.spaceship_x_pos += 5
             if self.spaceship_x_pos > 560:
                 self.spaceship_x_pos = 560
+                
+    def create_spaceship(self, screen, spaceship):
+        screen.blit(spaceship.spaceship_resized, (spaceship.spaceship_x_pos, spaceship.spaceship_y_pos))
+        
 
 
 

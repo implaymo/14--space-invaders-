@@ -8,6 +8,7 @@ class Bullet():
         self.radius = 3
         self.color = "black"
         self.vel = self.direction
+        self.bullet_speed_multipler = 10
     
     def draw_bullet(self, screen):
         self.bullet = pygame.draw.circle(screen, self.color, center=[self.bullet_x_pos, self.bullet_y_pos ], radius=self.radius)

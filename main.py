@@ -19,18 +19,25 @@ y_gap_between_aliens = 20
 x_gap_between_aliens = 30
 
 
-for row in range(number_rows):
-    if row < number_rows:
-        all_aliens.append([]) 
-    for i in range(total_alien_per_row):
-        x_pos = i * x_gap_between_aliens
-        y_next_row_pos = (row * y_gap_between_aliens)
-        y_pos = alien_start_y_pos + y_next_row_pos
-        new_alien = AlienImg(x_pos=x_pos, y_pos=y_pos)
-        all_aliens[row].append(new_alien)
-        
+def store_aliens():
+    for row in range(number_rows):
+        if row < number_rows:
+            all_aliens.append([]) 
+        for i in range(total_alien_per_row):
+            x_pos = i * x_gap_between_aliens
+            y_next_row_pos = (row * y_gap_between_aliens)
+            y_pos = alien_start_y_pos + y_next_row_pos
+            new_alien = AlienImg(x_pos=x_pos, y_pos=y_pos)
+            all_aliens[row].append(new_alien)
+            
+def create_aliens():
+     for row in range(len(all_aliens)):
+        for alien in all_aliens[row]:
+            screen.blit(alien.alien_resized, (alien.alien_x_pos, alien.alien_y_pos))
 
 
+
+store_aliens()
 all_bullets = []
 bullet_speed_multiplier = 10
 
@@ -44,13 +51,11 @@ while running:
     key = pygame.key.get_pressed()
     screen.fill("purple")
 
-    screen.blit(spaceship.spaceship_resized, (spaceship.spaceship_x_pos, spaceship.spaceship_y_pos))
+    spaceship.create_spaceship(spaceship=spaceship, screen=screen)
     spaceship.move_spaceship(key=key)
 
-    for row in range(len(all_aliens)):
-        for alien in all_aliens[row]:
-            screen.blit(alien.alien_resized, (alien.alien_x_pos, alien.alien_y_pos))
-
+    create_aliens()
+    
 
     for bullet in all_bullets:
         if bullet.bullet_y_pos > 0:
