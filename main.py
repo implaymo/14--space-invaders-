@@ -40,11 +40,7 @@ while running:
     if key[pygame.K_SPACE]:
         if len(all_bullets) < 1:
             all_bullets.append(Bullet(bullet_x_pos=spaceship.spaceship_x_pos + 20, bullet_y_pos=spaceship.spaceship_y_pos + 10))
-        
 
-    if key[pygame.K_UP]:
-        all_bullets.clear()
-    
     pygame.display.update()
     pygame.display.flip()
 
