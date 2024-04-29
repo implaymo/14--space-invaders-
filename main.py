@@ -13,12 +13,16 @@ spaceship = SpaceShipImg()
 
 all_aliens = []
 number_rows = 5
-alien_start_y_pos = 70
+alien_start_y_pos = 20
+y_gap_between_aliens = 20
+x_gap_between_aliens = 30
+
 for row in range(number_rows):
     for i in range(10):
-        x_pos = i*20
-        y_next_row_pos = (row * 20)
-        new_alien = all_aliens.append(AlienImg(x_pos=x_pos, y_pos=alien_start_y_pos + y_next_row_pos))
+        x_pos = i * x_gap_between_aliens
+        y_next_row_pos = (row * y_gap_between_aliens)
+        y_pos = alien_start_y_pos + y_next_row_pos
+        new_alien = all_aliens.append(AlienImg(x_pos=x_pos, y_pos=y_pos))
 
 
 all_bullets = []
