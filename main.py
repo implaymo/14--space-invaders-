@@ -13,16 +13,22 @@ spaceship = SpaceShipImg()
 
 all_aliens = []
 number_rows = 5
-alien_start_y_pos = 20
+total_alien_per_row = 3
+alien_start_y_pos = 50
 y_gap_between_aliens = 20
 x_gap_between_aliens = 30
 
+
 for row in range(number_rows):
-    for i in range(10):
+    if row < number_rows:
+        all_aliens.append([]) 
+    for i in range(total_alien_per_row):
         x_pos = i * x_gap_between_aliens
         y_next_row_pos = (row * y_gap_between_aliens)
         y_pos = alien_start_y_pos + y_next_row_pos
-        new_alien = all_aliens.append(AlienImg(x_pos=x_pos, y_pos=y_pos))
+        new_alien = AlienImg(x_pos=x_pos, y_pos=y_pos)
+        all_aliens[row].append(new_alien)
+        
 
 
 all_bullets = []
@@ -41,8 +47,9 @@ while running:
     screen.blit(spaceship.spaceship_resized, (spaceship.spaceship_x_pos, spaceship.spaceship_y_pos))
     spaceship.move_spaceship(key=key)
 
-    for alien in all_aliens:
-        screen.blit(alien.alien_resized, (alien.alien_x_pos, alien.alien_y_pos))
+    for row in range(len(all_aliens)):
+        for alien in all_aliens[row]:
+            screen.blit(alien.alien_resized, (alien.alien_x_pos, alien.alien_y_pos))
 
 
     for bullet in all_bullets:
