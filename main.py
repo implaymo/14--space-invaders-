@@ -26,16 +26,25 @@ def create_aliens():
             screen.blit(alien.alien_resized, (alien.alien_x_pos, alien.alien_y_pos))
 
 def move_aliens():
-    for i in range(len(all_aliens)):
-        for j in range(len(all_aliens[i])):
-            if all_aliens[i][total_alien_per_row - 1].alien_x_pos < 580:
-                all_aliens[i][total_alien_per_row - 1].alien_x_pos += 1
+    speed = 1
+    for row in all_aliens:
+        rightmost_alien = row[-1]
+        leftmost_alien = row[0]
+        for alien in row:
+            alien.alien_x_pos += speed
+            if rightmost_alien.alien_x_pos > 580 or leftmost_alien.alien_x_pos < 0:
+                speed *= -1
+
+                
+                
+
+
 
 
 spaceship = SpaceShipImg()
 
 all_aliens = []
-number_rows = 5
+number_rows = 2
 total_alien_per_row = 3
 alien_start_y_pos = 50
 y_gap_between_aliens = 20
