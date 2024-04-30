@@ -12,9 +12,9 @@ pygame.display.set_caption("Space Invaders")
 
 
 spaceship = SpaceShipImg()
-aliens = AlienImg()
+aliens_ship = AlienImg()
 
-aliens.store_aliens()
+aliens_ship.store_aliens()
 all_bullets = []
 bullet_speed_multiplier = 10
 
@@ -31,8 +31,8 @@ while running:
     spaceship.create_spaceship(spaceship=spaceship, screen=screen)
     spaceship.move_spaceship(key=key)
 
-    aliens.create_aliens(screen=screen)
-    aliens.move_aliens()
+    aliens_ship.create_aliens(screen=screen)
+    aliens_ship.move_aliens()
 
     
 
