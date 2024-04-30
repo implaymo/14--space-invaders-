@@ -31,9 +31,9 @@ while running:
     spaceship.create_spaceship(spaceship=spaceship, screen=screen)
     spaceship.move_spaceship(key=key)
 
+    
     aliens_ship.create_aliens(screen=screen)
     aliens_ship.move_aliens()
-
     
 
     for bullet in all_bullets:
