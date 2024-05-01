@@ -16,7 +16,7 @@ aliens_ship = AlienImg()
 
 aliens_ship.store_aliens()
 all_bullets = []
-bullet_speed_multiplier = 10
+bullet_speed_multiplier = 2
 
 
 

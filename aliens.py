@@ -14,7 +14,7 @@ class AlienImg():
         self.total_alien_per_row = 5
         self.col_gap_between_aliens = 25
         self.row_gap_between_aliens = 20
-        self.speed = 3
+        self.speed = 1
         
     def store_aliens(self):
         for row in range(self.number_rows):
