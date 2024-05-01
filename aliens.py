@@ -7,7 +7,7 @@ class AlienImg():
         self.alien_img = pygame.image.load(self.image_path).convert_alpha()
         self.alien_resized = pygame.transform.scale(self.alien_img, (20, 20))
 
-        self.alien_x_pos = 0
+        self.alien_x_pos = 20
         self.alien_y_pos = 20
         self.all_aliens = []
         self.number_rows = 3
@@ -22,11 +22,12 @@ class AlienImg():
             self.all_aliens.append([]) 
             for i in range(self.total_alien_per_row):
                 new_alien = AlienImg()
-                next_col_pos = row * self.col_gap_between_aliens
+                next_col_pos = i * self.col_gap_between_aliens
                 new_alien.alien_x_pos = self.alien_x_pos + next_col_pos
-                
-                next_row_pos = i * self.row_gap_between_aliens
+
+                next_row_pos = row * self.row_gap_between_aliens
                 new_alien.alien_y_pos = self.alien_y_pos + next_row_pos
+                print(new_alien.alien_y_pos)
                 self.all_aliens[row].append(new_alien)
         
     def create_aliens(self, screen):

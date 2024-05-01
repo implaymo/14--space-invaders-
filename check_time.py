@@ -12,7 +12,7 @@ class TimeTracker():
             raise ValueError("Game not started")
         return time.perf_counter() - self.start_time
     
-    def is_game_live(self, threshold=10):
+    def is_game_live(self, threshold=2):
         elapsed_time = self.get_elapsed_time()
         return elapsed_time >= threshold
         

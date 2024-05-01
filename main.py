@@ -54,10 +54,10 @@ while running:
     shot_bullet(spaceship_bullets, direction=-1)
     shot_bullet(aliens_bullets, direction=1)
 
-    
-    for alien in aliens_ship.all_aliens[aliens_ship.number_rows - 1]:
-        if alien.alien_x_pos > 0 and time_tracker.is_game_live(threshold=10):
-            store_bullet(aliens_bullets, Bullet(bullet_x_pos=alien.alien_x_pos, bullet_y_pos=alien.alien_y_pos + 100))
+    last_row_aliens = aliens_ship.number_rows - 1
+    for alien in aliens_ship.all_aliens[last_row_aliens]:
+        if alien.alien_x_pos > 0 and time_tracker.is_game_live():
+            store_bullet(aliens_bullets, Bullet(bullet_x_pos=alien.alien_x_pos, bullet_y_pos=alien.alien_y_pos))
         
 
     if key[pygame.K_SPACE]:
