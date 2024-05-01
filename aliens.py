@@ -15,6 +15,7 @@ class AlienImg():
         self.col_gap_between_aliens = 25
         self.row_gap_between_aliens = 20
         self.speed = 1
+        self.hit_wall = False
         
     def store_aliens(self):
         for row in range(self.number_rows):
@@ -34,12 +35,11 @@ class AlienImg():
                 screen.blit(alien.alien_resized, (alien.alien_x_pos, alien.alien_y_pos))
                 
     def move_aliens(self):
-        hit_wall = False
         for row in self.all_aliens:
             for alien in row:
                 alien.alien_x_pos += self.speed
                 if alien.alien_x_pos >= 580 or alien.alien_x_pos <= 0:
-                    hit_wall = True
-        if hit_wall:           
+                    self.hit_wall = True
+        if self.hit_wall:           
             self.speed *= -1
-            hit_wall = False
+            self.hit_wall = False
