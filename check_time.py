@@ -13,7 +13,6 @@ class TimeTracker():
         return time.perf_counter() - self.start_time
     
     def is_game_live(self, threshold=10):
-        print(self.get_elapsed_time())
         elapsed_time = self.get_elapsed_time()
         return elapsed_time >= threshold
         

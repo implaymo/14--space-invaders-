@@ -21,13 +21,14 @@ spaceship_bullets = []
 aliens_bullets = []
 bullet_speed_multiplier = 2
 
-def shot_bullet(list):
+def shot_bullet(list, direction):
     for bullet in list:
         if bullet.bullet_y_pos > 0:
-            bullet.bullet_y_pos += bullet.direction * bullet_speed_multiplier
+            bullet.bullet_y_pos += direction * bullet_speed_multiplier
             bullet.draw_bullet(screen)
         else:
             list.pop(list.index(bullet))
+            
 def store_bullet(list, class_):
     if len(list) < 1:
             list.append(class_)
@@ -50,12 +51,13 @@ while running:
     aliens_ship.create_aliens(screen=screen)
     aliens_ship.move_aliens()
     
+    shot_bullet(spaceship_bullets, direction=-1)
+    shot_bullet(aliens_bullets, direction=1)
 
-    shot_bullet(spaceship_bullets)
-    shot_bullet(aliens_bullets)
-
-    if time_tracker.is_game_live(threshold=10):
-        store_bullet(aliens_bullets, Bullet(bullet_x_pos=aliens_ship.alien_x_pos, bullet_y_pos=aliens_ship.alien_x_pos))
+    
+    for alien in aliens_ship.all_aliens[aliens_ship.number_rows - 1]:
+        if alien.alien_x_pos > 0 and time_tracker.is_game_live(threshold=10):
+            store_bullet(aliens_bullets, Bullet(bullet_x_pos=alien.alien_x_pos, bullet_y_pos=alien.alien_y_pos + 100))
         
 
     if key[pygame.K_SPACE]:

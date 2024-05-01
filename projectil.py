@@ -13,8 +13,6 @@ class Bullet():
     def draw_bullet(self, screen):
         self.bullet = pygame.draw.circle(screen, self.color, center=[self.bullet_x_pos, self.bullet_y_pos ], radius=self.radius)
 
-    def update_bullet(self):
-        self.bullet_y_pos *= self.vel
 
 
     
