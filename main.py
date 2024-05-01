@@ -3,6 +3,7 @@ from spaceship import SpaceShipImg
 from projectil import Bullet
 from aliens import AlienImg
 from check_time import TimeTracker
+import random
 
 pygame.init()
 screen = pygame.display.set_mode((600,400))
@@ -54,11 +55,11 @@ while running:
     shot_bullet(spaceship_bullets, direction=-1)
     shot_bullet(aliens_bullets, direction=1)
 
-    last_row_aliens = aliens_ship.number_rows - 1
-    for alien in aliens_ship.all_aliens[last_row_aliens]:
-        if alien.alien_x_pos > 0 and time_tracker.is_game_live():
-            store_bullet(aliens_bullets, Bullet(bullet_x_pos=alien.alien_x_pos, bullet_y_pos=alien.alien_y_pos))
-        
+    last_row_aliens = aliens_ship.all_aliens[aliens_ship.number_rows - 1]
+    random_alien = random.choice(last_row_aliens)
+    if random_alien.alien_x_pos > 0 and time_tracker.is_game_live():
+        store_bullet(aliens_bullets, Bullet(bullet_x_pos=random_alien.alien_x_pos + (aliens_ship.width /2), bullet_y_pos=random_alien.alien_y_pos + aliens_ship.height))
+            
 
     if key[pygame.K_SPACE]:
         store_bullet(spaceship_bullets, Bullet(bullet_x_pos=spaceship.spaceship_x_pos + 20, bullet_y_pos=spaceship.spaceship_y_pos + 10))
