@@ -17,10 +17,13 @@ spaceship = SpaceShipImg()
 aliens_ship = AlienImg()
 time_tracker = TimeTracker()
 
+
 aliens_ship.store_aliens()
 spaceship_bullets = []
 aliens_bullets = []
 bullet_speed_multiplier = 2
+bullet_was_shot = False
+
 
 def shot_bullet(list, direction):
     for bullet in list:
@@ -41,7 +44,7 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    
+
     key = pygame.key.get_pressed()
     screen.fill("purple")
 
@@ -52,17 +55,22 @@ while running:
     aliens_ship.create_aliens(screen=screen)
     aliens_ship.move_aliens()
     
-    shot_bullet(spaceship_bullets, direction=-1)
-    shot_bullet(aliens_bullets, direction=1)
+    spaceship_shooted = shot_bullet(spaceship_bullets, direction=-1)
+    aliens_shooted = shot_bullet(aliens_bullets, direction=1)
+    
 
     last_row_aliens = aliens_ship.all_aliens[aliens_ship.number_rows - 1]
     random_alien = random.choice(last_row_aliens)
     if random_alien.alien_x_pos > 0 and time_tracker.is_game_live():
-        store_bullet(aliens_bullets, Bullet(bullet_x_pos=random_alien.alien_x_pos + (aliens_ship.width /2), bullet_y_pos=random_alien.alien_y_pos + aliens_ship.height), number_of_bullets=5)
-            
+        store_bullet(aliens_bullets, Bullet(bullet_x_pos=random_alien.alien_x_pos + (aliens_ship.width /2), bullet_y_pos=random_alien.alien_y_pos + aliens_ship.height), number_of_bullets=10)
+        bullet_was_shot = True
+        if bullet_was_shot:
+            time_tracker.threshold = time_tracker.threshold + 5
 
+    top_of_spaceship = 10
+    mid_of_spaceship = 20
     if key[pygame.K_SPACE]:
-        store_bullet(spaceship_bullets, Bullet(bullet_x_pos=spaceship.spaceship_x_pos + 20, bullet_y_pos=spaceship.spaceship_y_pos + 10), number_of_bullets=1)
+        store_bullet(spaceship_bullets, Bullet(bullet_x_pos=spaceship.spaceship_x_pos + mid_of_spaceship, bullet_y_pos=spaceship.spaceship_y_pos + top_of_spaceship), number_of_bullets=1)
 
     
     pygame.display.update()
