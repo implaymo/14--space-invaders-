@@ -13,7 +13,7 @@ pygame.display.set_caption("Space Invaders")
 
 
 
-spaceship = SpaceShipImg()
+spaceship = SpaceShipImg(5)
 aliens = AlienImg()
 time_tracker = TimeTracker()
 
@@ -71,7 +71,9 @@ def check_collision_bullet_and_alien():
 def check_collision_bullet_and_spaceship():
        for bullet in total_aliens_bullets:
             if bullet.bullet_rect.colliderect(spaceship.spaceship_rect):
-                print("SPACESHIP LOST A LIFE")
+                spaceship.got_hit = True
+                spaceship.lose_life()
+
 
 
 time_tracker.start_game()
