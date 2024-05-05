@@ -9,6 +9,7 @@ class AlienImg():
         self.image_path = os.path.join("images", "alien.png")
         self.alien_img = pygame.image.load(self.image_path).convert_alpha()
         self.alien_resized = pygame.transform.scale(self.alien_img, (self.width, self.height))
+        self.alien_rect = self.alien_resized.get_rect()
 
         self.alien_x_pos = 20
         self.alien_y_pos = 20
@@ -36,13 +37,16 @@ class AlienImg():
         for row in range(len(self.all_aliens)):
             for alien in self.all_aliens[row]:
                 screen.blit(alien.alien_resized, (alien.alien_x_pos, alien.alien_y_pos))
+
                 
     def move_aliens(self):
         for row in self.all_aliens:
             for alien in row:
                 alien.alien_x_pos += self.speed
+                self.alien_rect.topleft = (alien.alien_x_pos, alien.alien_y_pos)
                 if alien.alien_x_pos >= 580 or alien.alien_x_pos <= 0:
                     self.hit_wall = True
         if self.hit_wall:           
             self.speed *= -1
             self.hit_wall = False
+    
