@@ -24,6 +24,7 @@ total_spaceship_bullets = []
 total_aliens_bullets = []
 bullet_speed_multiplier = 2
 bullet_was_shot = False
+bullet_collide = False
 
 
 def shot_bullet(game_elements_list, direction, is_alien=False):
@@ -86,9 +87,11 @@ while running:
 
     # Check Collision Bullet with Aliens
     for bullet in total_spaceship_bullets:
-        if aliens.alien_rect.colliderect(bullet.bullet_rect):
-            pass
-
+        for row in aliens.all_aliens:
+            for alien in row:
+                if bullet.bullet_rect.colliderect(alien.alien_rect):
+                    pass 
+                
     pygame.display.update()
     pygame.display.flip()
 
