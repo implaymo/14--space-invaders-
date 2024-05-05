@@ -27,7 +27,7 @@ bullet_was_shot = False
 bullet_collide = False
 
 
-def shot_bullet(game_elements_list, direction, is_alien=False):
+def shot_bullet(game_elements_list, direction):
     for bullet in game_elements_list:
         if bullet.bullet_y_pos > 0:
             bullet.bullet_y_pos += direction * bullet_speed_multiplier
@@ -93,8 +93,8 @@ while running:
     aliens.create_aliens(screen=screen)
     aliens.move_aliens()
     
-    spaceship_shooted = shot_bullet(total_spaceship_bullets, direction=-1, is_alien=False)
-    aliens_shooted = shot_bullet(total_aliens_bullets, direction=1, is_alien=True)
+    spaceship_shooted = shot_bullet(total_spaceship_bullets, direction=-1)
+    aliens_shooted = shot_bullet(total_aliens_bullets, direction=1)
     
 
     alien_shooting()
