@@ -55,9 +55,9 @@ class AlienImg():
             self.hit_wall = False
     
     def check_collision_bullets(self, total_spaceship_bullets):
-       for bullet in total_spaceship_bullets:
-        for row in self.all_aliens:
-            for alien in row:
-                if bullet.bullet_rect.colliderect(alien.alien_rect):
-                    row.pop(row.index(alien))
-                    print("ALIENS GOT SHOT")
+        for bullet in total_spaceship_bullets:
+            for row in self.all_aliens:
+                for alien in row:
+                    if bullet.bullet_rect.colliderect(alien.alien_rect):
+                        row.pop(row.index(alien))
+                        return True

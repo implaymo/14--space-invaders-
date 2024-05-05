@@ -13,7 +13,7 @@ pygame.display.set_caption("Space Invaders")
 
 
 
-spaceship = SpaceShipImg(5)
+spaceship = SpaceShipImg(lifes=5)
 aliens = AlienImg()
 time_tracker = TimeTracker()
 
@@ -24,15 +24,23 @@ total_spaceship_bullets = []
 total_aliens_bullets = []
 bullet_speed_multiplier = 2
 bullet_was_shot = False
+bullet_hit_target = False
 
 
 def shot_bullet(game_elements_list, direction):
+    global bullet_hit_target
     for bullet in game_elements_list:
+        if bullet_hit_target:
+            print("BULLET HIT TARGET")
+            game_elements_list.pop(game_elements_list.index(bullet))
+            bullet_hit_target = False
         if bullet.bullet_y_pos > 0:
             bullet.bullet_y_pos += direction * bullet_speed_multiplier
             bullet.move_bullet(screen)
         else:
             game_elements_list.pop(game_elements_list.index(bullet))
+        
+        
 
             
 def store_bullet(game_elements_list, class_, number_of_bullets):
@@ -85,8 +93,10 @@ while running:
     spaceship_shooting()
 
     # Check Collision Bullet with Aliens
-    aliens.check_collision_bullets(total_spaceship_bullets=total_spaceship_bullets)
-    spaceship.check_collision_bullet(total_aliens_bullets=total_aliens_bullets)
+    if aliens.check_collision_bullets(total_spaceship_bullets=total_spaceship_bullets):
+        bullet_hit_target = True
+    if spaceship.check_collision_bullet(total_aliens_bullets=total_aliens_bullets):
+        bullet_hit_target = True
 
 
     pygame.display.update()
