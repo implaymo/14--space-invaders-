@@ -24,16 +24,16 @@ total_spaceship_bullets = []
 total_aliens_bullets = []
 bullet_speed_multiplier = 2
 bullet_was_shot = False
-bullet_collide = False
 
 
 def shot_bullet(game_elements_list, direction):
     for bullet in game_elements_list:
         if bullet.bullet_y_pos > 0:
             bullet.bullet_y_pos += direction * bullet_speed_multiplier
-            bullet.draw_bullet(screen)
+            bullet.move_bullet(screen)
         else:
             game_elements_list.pop(game_elements_list.index(bullet))
+
             
 def store_bullet(game_elements_list, class_, number_of_bullets):
     if len(game_elements_list) < number_of_bullets:
@@ -60,22 +60,6 @@ def spaceship_shooting():
         bullet_for_spaceship = Bullet(bullet_x_pos=spaceship.spaceship_x_pos + mid_of_spaceship, bullet_y_pos=spaceship.spaceship_y_pos + top_of_spaceship, is_alien=False)
         store_bullet(total_spaceship_bullets, bullet_for_spaceship, number_of_bullets=total_bullets_spaceship)
 
-
-def check_collision_bullet_and_alien():
-       for bullet in total_spaceship_bullets:
-        for row in aliens.all_aliens:
-            for alien in row:
-                if bullet.bullet_rect.colliderect(alien.alien_rect):
-                    row.pop(row.index(alien))
-
-def check_collision_bullet_and_spaceship():
-       for bullet in total_aliens_bullets:
-            if bullet.bullet_rect.colliderect(spaceship.spaceship_rect):
-                spaceship.got_hit = True
-                spaceship.lose_life()
-
-
-
 time_tracker.start_game()
 
 
@@ -101,8 +85,8 @@ while running:
     spaceship_shooting()
 
     # Check Collision Bullet with Aliens
-    check_collision_bullet_and_alien()
-    check_collision_bullet_and_spaceship()
+    aliens.check_collision_bullets(total_spaceship_bullets=total_spaceship_bullets)
+    spaceship.check_collision_bullet(total_aliens_bullets=total_aliens_bullets)
 
 
     pygame.display.update()

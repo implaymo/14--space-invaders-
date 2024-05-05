@@ -39,3 +39,9 @@ class SpaceShipImg():
             self.got_hit = False
 
 
+    def check_collision_bullet(self, total_aliens_bullets):
+        for bullet in total_aliens_bullets:
+            if bullet.bullet_rect.colliderect(self.spaceship_rect):
+                self.got_hit = True
+                self.lose_life()
+                print("SPACESHIP GOT SHOT")
