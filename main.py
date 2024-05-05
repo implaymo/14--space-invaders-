@@ -30,7 +30,7 @@ def shot_bullet(game_elements_list, direction, is_alien=False):
     for bullet in game_elements_list:
         if bullet.bullet_y_pos > 0:
             bullet.bullet_y_pos += direction * bullet_speed_multiplier
-            bullet.draw_bullet(screen, is_alien)
+            bullet.draw_bullet(screen)
         else:
             game_elements_list.pop(game_elements_list.index(bullet))
             
@@ -44,7 +44,7 @@ def alien_shooting():
     random_alien = random.choice(last_row_aliens)
 
     if random_alien.alien_x_pos > 0 and time_tracker.is_game_live():
-        bullet_for_aliens = Bullet(bullet_x_pos=random_alien.alien_x_pos + (aliens.width /2), bullet_y_pos=random_alien.alien_y_pos + aliens.height)
+        bullet_for_aliens = Bullet(bullet_x_pos=random_alien.alien_x_pos + (aliens.width /2), bullet_y_pos=random_alien.alien_y_pos + aliens.height, is_alien=True)
         store_bullet(total_aliens_bullets, bullet_for_aliens, number_of_bullets=total_bullets_aliens)
         bullet_was_shot = True
         if bullet_was_shot:
@@ -56,7 +56,7 @@ def spaceship_shooting():
     top_of_spaceship = 10
     mid_of_spaceship = 20
     if key[pygame.K_SPACE]:
-        bullet_for_spaceship = Bullet(bullet_x_pos=spaceship.spaceship_x_pos + mid_of_spaceship, bullet_y_pos=spaceship.spaceship_y_pos + top_of_spaceship)
+        bullet_for_spaceship = Bullet(bullet_x_pos=spaceship.spaceship_x_pos + mid_of_spaceship, bullet_y_pos=spaceship.spaceship_y_pos + top_of_spaceship, is_alien=False)
         store_bullet(total_spaceship_bullets, bullet_for_spaceship, number_of_bullets=total_bullets_spaceship)
 
 
@@ -85,7 +85,9 @@ while running:
     spaceship_shooting()
 
     # Check Collision Bullet with Aliens
-
+    for bullet in total_spaceship_bullets:
+        if aliens.alien_rect.colliderect(bullet.bullet_rect):
+            pass
 
     pygame.display.update()
     pygame.display.flip()
