@@ -11,8 +11,6 @@ clock = pygame.time.Clock()
 running = True
 pygame.display.set_caption("Space Invaders")
 
-
-
 spaceship = SpaceShipImg(lifes=5)
 aliens = AlienImg()
 time_tracker = TimeTracker()
@@ -39,10 +37,7 @@ def shot_bullet(game_elements_list, direction):
             bullet.move_bullet(screen)
         else:
             game_elements_list.pop(game_elements_list.index(bullet))
-        
-        
-
-            
+                       
 def store_bullet(game_elements_list, class_, number_of_bullets):
     if len(game_elements_list) < number_of_bullets:
             game_elements_list.append(class_)
@@ -68,9 +63,8 @@ def spaceship_shooting():
         bullet_for_spaceship = Bullet(bullet_x_pos=spaceship.spaceship_x_pos + mid_of_spaceship, bullet_y_pos=spaceship.spaceship_y_pos + top_of_spaceship, is_alien=False)
         store_bullet(total_spaceship_bullets, bullet_for_spaceship, number_of_bullets=total_bullets_spaceship)
 
+
 time_tracker.start_game()
-
-
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
