@@ -45,12 +45,12 @@ class AlienImg():
         for row in self.all_aliens:
             for alien in row:
                 alien.alien_x_pos += self.speed
-                for new_row in self.all_aliens:
-                    for new_alien in row:
-                        new_alien.alien_rect.topleft = (alien.alien_x_pos, alien.alien_y_pos)
+                alien.alien_rect.topleft = (alien.alien_x_pos, alien.alien_y_pos)
+
                 if alien.alien_x_pos >= 580 or alien.alien_x_pos <= 0:
                     self.hit_wall = True
-        if self.hit_wall:           
+
+        if self.hit_wall:
             self.speed *= -1
             self.hit_wall = False
     
