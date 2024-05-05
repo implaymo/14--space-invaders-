@@ -90,7 +90,7 @@ while running:
         for row in aliens.all_aliens:
             for alien in row:
                 if bullet.bullet_rect.colliderect(alien.alien_rect):
-                    print(alien.alien_rect)
+                    row.pop(row.index(alien))
     pygame.display.update()
     pygame.display.flip()
 
