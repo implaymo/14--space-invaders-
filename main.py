@@ -43,15 +43,14 @@ def store_bullet(game_elements_list, class_, number_of_bullets):
 
 def alien_shooting():
     total_bullets_aliens = 10
-    last_row_aliens = aliens.all_aliens[aliens.number_rows - 1]
-    random_alien = random.choice(last_row_aliens)
+    row_aliens = aliens.all_aliens[random.randint(0,2)]
+    random_alien = random.choice(row_aliens)
 
     if random_alien.alien_x_pos > 0 and time_tracker.is_game_live():
-        bullet_for_aliens = Bullet(bullet_x_pos=random_alien.alien_x_pos + (aliens.width /2), bullet_y_pos=random_alien.alien_y_pos + aliens.height, is_alien=True)
-        store_bullet(total_aliens_bullets, bullet_for_aliens, number_of_bullets=total_bullets_aliens)
+        bullet = Bullet(bullet_x_pos=random_alien.alien_x_pos + (aliens.width /2), bullet_y_pos=random_alien.alien_y_pos + aliens.height, is_alien=True)
+        store_bullet(total_aliens_bullets, bullet, number_of_bullets=total_bullets_aliens)
         bullet_was_shot = True
         if bullet_was_shot:
-            # Makes aliens keep shooting and increaseas number of bullets to never be 0
             time_tracker.threshold = time_tracker.threshold + 5
             total_bullets_aliens = total_bullets_aliens + 5
 
@@ -60,8 +59,8 @@ def spaceship_shooting():
     top_of_spaceship = 10
     mid_of_spaceship = 20
     if key[pygame.K_SPACE]:
-        bullet_for_spaceship = Bullet(bullet_x_pos=spaceship.spaceship_x_pos + mid_of_spaceship, bullet_y_pos=spaceship.spaceship_y_pos + top_of_spaceship, is_alien=False)
-        store_bullet(total_spaceship_bullets, bullet_for_spaceship, number_of_bullets=total_bullets_spaceship)
+        bullet = Bullet(bullet_x_pos=spaceship.spaceship_x_pos + mid_of_spaceship, bullet_y_pos=spaceship.spaceship_y_pos + top_of_spaceship, is_alien=False)
+        store_bullet(total_spaceship_bullets, bullet, number_of_bullets=total_bullets_spaceship)
 
 
 time_tracker.start_game()
