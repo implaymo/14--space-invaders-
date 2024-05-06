@@ -29,7 +29,6 @@ def shot_bullet(game_elements_list, direction):
     global bullet_hit_target
     for bullet in game_elements_list:
         if bullet_hit_target:
-            print("BULLET HIT TARGET")
             game_elements_list.pop(game_elements_list.index(bullet))
             bullet_hit_target = False
         if bullet.bullet_y_pos > 0:
@@ -52,6 +51,7 @@ def alien_shooting():
         store_bullet(total_aliens_bullets, bullet_for_aliens, number_of_bullets=total_bullets_aliens)
         bullet_was_shot = True
         if bullet_was_shot:
+            # Makes aliens keep shooting and increaseas number of bullets to never be 0
             time_tracker.threshold = time_tracker.threshold + 5
             total_bullets_aliens = total_bullets_aliens + 5
 
