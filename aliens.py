@@ -1,5 +1,6 @@
 import pygame
 import os
+import random 
 
 class AlienImg():
     def __init__(self) -> None:
@@ -61,3 +62,15 @@ class AlienImg():
                     if bullet.bullet_rect.colliderect(alien.alien_rect):
                         row.pop(row.index(alien))
                         return True
+    
+    def choose_alien_shot(self):      
+        remove_empty_lists = [row for row in self.all_aliens if row != []]
+        random_row = random.choice(remove_empty_lists)
+        if remove_empty_lists != []:
+            random_alien = random.choice(random_row)
+            return random_alien
+
+
+        
+        
+        

@@ -43,8 +43,7 @@ def store_bullet(game_elements_list, class_, number_of_bullets):
 
 def alien_shooting():
     total_bullets_aliens = 10
-    row_aliens = aliens.all_aliens[random.randint(0,2)]
-    random_alien = random.choice(row_aliens)
+    random_alien = aliens.choose_alien_shot()
 
     if random_alien.alien_x_pos > 0 and time_tracker.is_game_live():
         bullet = Bullet(bullet_x_pos=random_alien.alien_x_pos + (aliens.width /2), bullet_y_pos=random_alien.alien_y_pos + aliens.height, is_alien=True)
