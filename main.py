@@ -40,10 +40,8 @@ def shot_bullet(game_elements_list, direction):
 def spawn_alien_bullets():
     random_alien = aliens.choose_alien_shot()
     if random_alien is not None:
-        mid_of_alien = random_alien.alien_x_pos + (aliens.width /2)
-        bottom_of_alien = random_alien.alien_y_pos + aliens.height
         if time_tracker.is_game_live():
-            bullet = Bullet(bullet_x_pos=mid_of_alien, bullet_y_pos=bottom_of_alien, number_of_bullets=1000, is_alien=True)
+            bullet = Bullet(bullet_x_pos=random_alien.alien_x_pos, bullet_y_pos=random_alien.alien_y_pos , number_of_bullets=1000, is_alien=True)
             bullet.add_bullet(aliens.total_aliens_bullets)
             bullet_was_shot = True
             if bullet_was_shot:

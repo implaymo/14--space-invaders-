@@ -16,7 +16,7 @@ class AlienImg():
         self.all_aliens = []
         self.total_aliens_bullets = []
         self.number_rows = 2
-        self.total_alien_per_row = 5
+        self.total_alien_per_row = 3
         self.col_gap_between_aliens = 25
         self.row_gap_between_aliens = 20
         self.speed = 1
