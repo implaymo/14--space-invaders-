@@ -1,6 +1,7 @@
 import pygame
 import os
 
+
 class SpaceShipImg():
     def __init__(self, lifes) -> None:
         self.image_path = os.path.join("images", "spaceship.png")
@@ -13,7 +14,8 @@ class SpaceShipImg():
         self.spaceship_y_pos = 320
 
         self.lifes = lifes
-        self.got_hit = False
+        self.got_hit = False  
+        self.total_spaceship_bullets = []
 
 
 
@@ -37,7 +39,7 @@ class SpaceShipImg():
 
     def lose_life(self):
         if self.got_hit:
-            self.lifes = self.lifes - 1
+            self.lifes -= 1
             self.got_hit = False
 
 
@@ -48,3 +50,4 @@ class SpaceShipImg():
                 self.lose_life()
                 print(self.lifes)
                 return True
+            

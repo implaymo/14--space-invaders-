@@ -3,7 +3,7 @@ import time
 class TimeTracker():
     def __init__(self) -> None:
         self.start_time = None
-        self.threshold = 5
+        self.threshold = 1
         
     def start_game(self):
         self.start_time = time.perf_counter()

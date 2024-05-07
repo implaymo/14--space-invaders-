@@ -14,12 +14,15 @@ class AlienImg():
         self.alien_x_pos = 20
         self.alien_y_pos = 20
         self.all_aliens = []
-        self.number_rows = 3
+        self.total_aliens_bullets = []
+        self.number_rows = 2
         self.total_alien_per_row = 5
         self.col_gap_between_aliens = 25
         self.row_gap_between_aliens = 20
         self.speed = 1
         self.hit_wall = False
+        self.wiped = False
+        self.level = 1
         
     def store_aliens(self):
         for row in range(self.number_rows):
@@ -62,12 +65,15 @@ class AlienImg():
                         row.pop(row.index(alien))
                         return True
     
-    def choose_alien_shot(self):      
-        remove_empty_lists = [row for row in self.all_aliens if row != []]
-        random_row = random.choice(remove_empty_lists)
-        if remove_empty_lists != []:
-            random_alien = random.choice(random_row)
-            return random_alien
+    def choose_alien_shot(self):  
+        try:    
+            remove_empty_lists = [row for row in self.all_aliens if row != []]
+            random_row = random.choice(remove_empty_lists)
+            if remove_empty_lists != []:
+                random_alien = random.choice(random_row)
+                return random_alien
+        except IndexError:
+            self.wiped = True
 
 
         
