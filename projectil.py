@@ -7,8 +7,6 @@ class Bullet():
         self.direction = -1
         self.bullet_x_pos = bullet_x_pos
         self.bullet_y_pos = bullet_y_pos
-        self.radius = 3
-        self.color = "black"
         self.vel = self.direction
         self.width = 30
         self.height = 30
@@ -21,8 +19,8 @@ class Bullet():
             self.bullet_resized = pygame.transform.rotate(self.bullet_resized, 180)
 
     def move_bullet(self, screen):
-        screen.blit(self.bullet_resized, (self.bullet_x_pos - 15, self.bullet_y_pos - 20))
-        self.bullet_rect.topleft = (self.bullet_x_pos, self.bullet_y_pos)
+        screen.blit(self.bullet_resized, (self.bullet_x_pos, self.bullet_y_pos))
+        self.bullet_rect.topleft = (self.bullet_x_pos, self.bullet_y_pos + 15)
 
 
 

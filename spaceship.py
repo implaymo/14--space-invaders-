@@ -27,6 +27,7 @@ class SpaceShipImg():
             if self.spaceship_x_pos > 560:
                 self.spaceship_x_pos = 560
         self.spaceship_rect.topleft = (self.spaceship_x_pos + 40, self.spaceship_y_pos + 40)
+
         
                 
     def create_spaceship(self, screen, spaceship):
