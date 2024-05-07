@@ -14,6 +14,7 @@ class Bullet():
         self.bullet_img = pygame.image.load(self.image_path).convert_alpha()
         self.bullet_resized = pygame.transform.scale(self.bullet_img, (self.width, self.height))
         self.bullet_rect = self.bullet_resized.get_rect()
+        self.bullet_rect.inflate_ip(-15, -10)
         
         if is_alien: 
             self.bullet_resized = pygame.transform.rotate(self.bullet_resized, 180)

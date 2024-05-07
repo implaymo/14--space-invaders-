@@ -33,6 +33,7 @@ class AlienImg():
                 new_alien.alien_y_pos = self.alien_y_pos + next_row_pos
 
                 new_alien.alien_rect = new_alien.alien_resized.get_rect(topleft=(new_alien.alien_x_pos, new_alien.alien_y_pos))
+                new_alien.alien_rect.inflate_ip(-10, -5)
                 self.all_aliens[row].append(new_alien)
         
     def create_aliens(self, screen):
@@ -45,7 +46,7 @@ class AlienImg():
         for row in self.all_aliens:
             for alien in row:
                 alien.alien_x_pos += self.speed
-                alien.alien_rect.topleft = (alien.alien_x_pos + (self.width / 2), alien.alien_y_pos)
+                alien.alien_rect.topleft = (alien.alien_x_pos, alien.alien_y_pos - 5)
                 if alien.alien_x_pos >= 580 or alien.alien_x_pos <= 0:
                     self.hit_wall = True
 
