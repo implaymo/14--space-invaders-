@@ -3,6 +3,7 @@ from spaceship import SpaceShipImg
 from projectil import Bullet
 from aliens import AlienImg
 from check_time import TimeTracker
+from game_text import Lifes
 
 
 pygame.init()
@@ -11,9 +12,10 @@ clock = pygame.time.Clock()
 running = True
 pygame.display.set_caption("Space Invaders")
 
-spaceship = SpaceShipImg(lifes=5)
+spaceship = SpaceShipImg(lifes=3)
 aliens = AlienImg()
 time_tracker = TimeTracker()
+lifes = Lifes()
 
 
 aliens.store_aliens()
@@ -61,7 +63,12 @@ def spawn_spaceship_bullets():
     if key[pygame.K_SPACE]:
         bullet = Bullet(bullet_x_pos=mid_of_spaceship, bullet_y_pos=top_of_spaceship, is_alien=False)
         store_bullet(total_spaceship_bullets, bullet, number_of_bullets=total_bullets)
+        
+def level_up():
+    pass
 
+def game_over():
+    pass
 
 time_tracker.start_game()
 while running:
@@ -72,6 +79,8 @@ while running:
     key = pygame.key.get_pressed()
     screen.fill("purple")
 
+    lifes.display_text(screen=screen, spaceship_lifes=spaceship.lifes)
+    
     spaceship.create_spaceship(spaceship=spaceship, screen=screen)
     spaceship.move_spaceship(key=key)
     
@@ -90,7 +99,6 @@ while running:
         bullet_hit_target = True
     if spaceship.check_collision_bullet(total_aliens_bullets=total_aliens_bullets):
         bullet_hit_target = True
-
 
     pygame.display.update()
     pygame.display.flip()
