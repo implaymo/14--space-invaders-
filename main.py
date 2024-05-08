@@ -59,12 +59,17 @@ def spawn_spaceship_bullets():
         
 def level_up():
     global bullet_speed
+    time_tracker.start_game()
+    aliens.total_aliens_bullets = []
     aliens.total_alien_per_row += 1
+    aliens.alien_y_pos += 10
+    if aliens.alien_y_pos == 200:
+        aliens.alien_y_pos = 200
+        
     aliens.store_aliens()
     bullet_speed += 1
     spaceship.spaceship_x_pos = 270
     game_text.level += 1
-    time_tracker.start_game()
     time.sleep(1)
     aliens.wiped = False
 
