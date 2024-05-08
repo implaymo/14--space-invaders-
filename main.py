@@ -20,19 +20,19 @@ game_text = GameText()
 aliens.store_aliens()
 
 bullet_hit_target = False
+bullet_speed = 2
 
-
-def shot_bullet(element_from_list, direction):
+def shot_bullet(total_bullets_list, direction):
     global bullet_hit_target
-    for bullet in element_from_list:
-        if bullet_hit_target:
-            element_from_list.pop(element_from_list.index(bullet))
-            bullet_hit_target = False
+    for bullet in total_bullets_list:
         if bullet.bullet_y_pos > 0:
-            bullet.bullet_y_pos += direction * bullet.speed
+            bullet.bullet_y_pos += direction * bullet_speed
             bullet.create_bullet(screen)
+        elif bullet_hit_target:
+            total_bullets_list.pop(total_bullets_list.index(bullet))
+            bullet_hit_target = False
         else:
-            element_from_list.pop(element_from_list.index(bullet))
+            total_bullets_list.pop(total_bullets_list.index(bullet))
 
 
 def spawn_alien_bullets():
@@ -58,9 +58,11 @@ def spawn_spaceship_bullets():
 
         
 def level_up():
-    aliens.number_rows += 1
+    global bullet_speed
     aliens.total_alien_per_row += 1
     aliens.store_aliens()
+    bullet_speed += 1
+    spaceship.spaceship_x_pos = 270
     game_text.level += 1
     time_tracker.start_game()
     time.sleep(1)
@@ -86,12 +88,14 @@ while running:
     aliens.create_aliens(screen=screen)
     aliens.move_aliens()
     
-    spawn_alien_bullets()
-    spawn_spaceship_bullets()
-    
+
     shot_bullet(spaceship.total_spaceship_bullets, direction=-1)
     shot_bullet(aliens.total_aliens_bullets, direction=1)
     
+    spawn_alien_bullets()
+    spawn_spaceship_bullets()
+    
+
 
     # Check Collisions
     if aliens.check_collision_bullets(total_spaceship_bullets=spaceship.total_spaceship_bullets):
