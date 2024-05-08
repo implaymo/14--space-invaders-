@@ -4,14 +4,13 @@ from projectil import Bullet
 from aliens import AlienImg
 from check_time import TimeTracker
 from game_text import GameText
+import time
 
 
 pygame.init()
 screen = pygame.display.set_mode((600,400))
 clock = pygame.time.Clock()
-running = True
 pygame.display.set_caption("Space Invaders")
-
 spaceship = SpaceShipImg(lifes=1)
 aliens = AlienImg()
 time_tracker = TimeTracker()
@@ -20,21 +19,20 @@ game_text = GameText()
 
 aliens.store_aliens()
 
-bullet_was_shot = False
 bullet_hit_target = False
 
 
-def shot_bullet(game_elements_list, direction):
+def shot_bullet(element_from_list, direction):
     global bullet_hit_target
-    for bullet in game_elements_list:
+    for bullet in element_from_list:
         if bullet_hit_target:
-            game_elements_list.pop(game_elements_list.index(bullet))
+            element_from_list.pop(element_from_list.index(bullet))
             bullet_hit_target = False
         if bullet.bullet_y_pos > 0:
-            bullet.bullet_y_pos += direction * bullet.bullet_speed
+            bullet.bullet_y_pos += direction * bullet.speed
             bullet.create_bullet(screen)
         else:
-            game_elements_list.pop(game_elements_list.index(bullet))
+            element_from_list.pop(element_from_list.index(bullet))
 
 
 def spawn_alien_bullets():
@@ -46,8 +44,10 @@ def spawn_alien_bullets():
             bullet_was_shot = True
             if bullet_was_shot:
                 time_tracker.threshold += 2
+                bullet_was_shot = False
     else:
         aliens.wiped = True
+        level_up()
         
 def spawn_spaceship_bullets():
     top_of_spaceship = spaceship.spaceship_y_pos - 10
@@ -57,25 +57,17 @@ def spawn_spaceship_bullets():
         bullet.add_bullet(spaceship.total_spaceship_bullets)
 
         
-        
-def reset_game():
-    pass
-        
 def level_up():
-    if aliens.wiped:
-        game_text.level += 1
-        aliens.total_alien_per_row += 1
-        for bullet in aliens.total_aliens_bullets:
-            bullet.speed += 3
-        for bullet in spaceship.total_spaceship_bullets:
-            bullet.speed += 3
-        aliens.wiped = False
-        
-def game_over():
-    if spaceship.lifes < 1:
-        pass
+    aliens.number_rows += 1
+    aliens.total_alien_per_row += 1
+    aliens.store_aliens()
+    game_text.level += 1
+    time_tracker.start_game()
+    time.sleep(1)
+    aliens.wiped = False
 
-time_tracker.start_game()
+time_tracker.start_game()   
+running = True
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -101,12 +93,13 @@ while running:
     shot_bullet(aliens.total_aliens_bullets, direction=1)
     
 
-
     # Check Collisions
     if aliens.check_collision_bullets(total_spaceship_bullets=spaceship.total_spaceship_bullets):
         bullet_hit_target = True
+
     if spaceship.check_collision_bullet(total_aliens_bullets=aliens.total_aliens_bullets):
         bullet_hit_target = True
+
 
     
     pygame.display.update()
@@ -115,3 +108,5 @@ while running:
     clock.tick(60)
 
 pygame.quit()
+
+

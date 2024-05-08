@@ -48,6 +48,5 @@ class SpaceShipImg():
             if bullet.bullet_rect.colliderect(self.spaceship_rect):
                 self.got_hit = True
                 self.lose_life()
-                print(self.lifes)
                 return True
             

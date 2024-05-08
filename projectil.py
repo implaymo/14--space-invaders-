@@ -5,7 +5,7 @@ class Bullet():
     def __init__(self,  bullet_x_pos, bullet_y_pos, number_of_bullets, is_alien=False) -> None:
         self.bullet_collide = False
         self.direction = -1
-        self.bullet_speed = 2
+        self.speed = 2
         self.bullet_x_pos = bullet_x_pos
         self.bullet_y_pos = bullet_y_pos
         self.number_of_bullets = number_of_bullets
