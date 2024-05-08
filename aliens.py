@@ -67,9 +67,9 @@ class AlienImg():
     
     def choose_alien_shot(self):  
         try:    
-            remove_empty_lists = [row for row in self.all_aliens if row != []]
-            random_row = random.choice(remove_empty_lists)
-            if remove_empty_lists != []:
+            not_empty_rows = [row for row in self.all_aliens if row != []]
+            random_row = random.choice(not_empty_rows)
+            if not_empty_rows != []:
                 random_alien = random.choice(random_row)
                 return random_alien
         except IndexError:
