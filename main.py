@@ -25,12 +25,12 @@ bullet_speed = 2
 def shot_bullet(total_bullets_list, direction):
     global bullet_hit_target
     for bullet in total_bullets_list:
+        if bullet_hit_target:
+            total_bullets_list.pop(total_bullets_list.index(bullet))
+            bullet_hit_target = False
         if bullet.bullet_y_pos > 0:
             bullet.bullet_y_pos += direction * bullet_speed
             bullet.create_bullet(screen)
-        elif bullet_hit_target:
-            total_bullets_list.pop(total_bullets_list.index(bullet))
-            bullet_hit_target = False
         else:
             total_bullets_list.pop(total_bullets_list.index(bullet))
 
@@ -61,12 +61,14 @@ def level_up():
     global bullet_speed
     time_tracker.start_game()
     aliens.total_aliens_bullets = []
+    aliens.all_aliens = []
     aliens.total_alien_per_row += 1
     aliens.alien_y_pos += 10
     if aliens.alien_y_pos == 200:
         aliens.alien_y_pos = 200
-        
+
     aliens.store_aliens()
+    print(aliens.all_aliens)
     bullet_speed += 1
     spaceship.spaceship_x_pos = 270
     game_text.level += 1
