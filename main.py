@@ -60,6 +60,7 @@ def spawn_spaceship_bullets():
 def level_up():
     global bullet_speed
     time_tracker.start_game()
+    time_tracker.threshold = 2
     aliens.total_aliens_bullets = []
     aliens.all_aliens = []
     aliens.total_alien_per_row += 1
