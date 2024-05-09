@@ -48,7 +48,7 @@ def spawn_alien_bullets():
     else:
         aliens.wiped = True
         level_up()
-        
+
 def spawn_spaceship_bullets():
     top_of_spaceship = spaceship.spaceship_y_pos - 10
     mid_of_spaceship = spaceship.spaceship_x_pos + 5
@@ -59,12 +59,12 @@ def spawn_spaceship_bullets():
         
 def level_up():
     global bullet_speed
+    show_level_up_message()
     time_tracker.start_game()
     time_tracker.threshold = 2
     aliens.total_aliens_bullets = []
     aliens.all_aliens = []
     aliens.total_alien_per_row += 1
-    aliens.speed = 1
     aliens.alien_y_pos += 10
     if aliens.alien_y_pos == 200:
         aliens.alien_y_pos = 200
@@ -73,8 +73,13 @@ def level_up():
     bullet_speed += 1
     spaceship.spaceship_x_pos = 270
     game_text.level += 1
-    time.sleep(1)
     aliens.wiped = False
+
+def show_level_up_message():
+    game_text.level_up_text(screen=screen, x_pos=70, y_pos=200)
+    pygame.display.flip()
+    pygame.event.pump()
+    pygame.time.delay(1000)
 
 time_tracker.start_game()   
 running = True

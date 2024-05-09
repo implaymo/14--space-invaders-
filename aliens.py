@@ -22,7 +22,6 @@ class AlienImg():
         self.speed = 1
         self.hit_wall = False
         self.wiped = False
-        self.level = 1
         
     def store_aliens(self):
         for row in range(self.number_rows):

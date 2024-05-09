@@ -18,6 +18,12 @@ class GameText():
         self.text = font.render(f"Level: {self.level}", True, self.green, self.blue)
         self.text_rect = self.text.get_rect()
         screen.blit(self.text, (x_pos, y_pos))
+
+    def level_up_text(self, screen, x_pos, y_pos):
+        font = pygame.font.Font('freesansbold.ttf', 40)
+        self.text = font.render(f"LEVEL {self.level}! MORE SPEED!", True, self.green, self.blue)
+        self.text_rect = self.text.get_rect()
+        screen.blit(self.text, (x_pos, y_pos))
         
         
     def game_over_text(self, screen, x_pos, y_pos):
