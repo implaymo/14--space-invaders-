@@ -67,19 +67,21 @@ def level_up():
     """Resets variables and increases some variables to make game harder"""
     global bullet_speed
     show_level_up_message()
-    time_tracker.start_game()
     time_tracker.threshold = 2
     aliens.total_aliens_bullets = []
     aliens.all_aliens = []
     aliens.total_alien_per_row += 1
-    aliens.alien_y_pos += 10
     if aliens.alien_y_pos == 200:
         aliens.alien_y_pos = 200
+    else:
+        aliens.alien_y_pos += 20
+
 
     aliens.store_aliens()
     bullet_speed += 1
     spaceship.spaceship_x_pos = 270
     game_text.level += 1
+    time_tracker.start_game()
     aliens.wiped = False
 
 
