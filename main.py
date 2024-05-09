@@ -58,7 +58,7 @@ def spawn_spaceship_bullets():
 
 
 def show_level_up_message():
-    game_text.level_up_text(screen=screen, x_pos=70, y_pos=200)
+    game_text.show_text(screen=screen, x_pos=70, y_pos=200, font_size=40, message=f"LEVEL {game_text.level}! MORE SPEED!")
     pygame.display.flip()
     pygame.event.pump()
     pygame.time.delay(1000)
@@ -94,8 +94,8 @@ while running:
     screen.fill("purple")
 
     
-    game_text.lifes_text(screen=screen, spaceship_lifes=spaceship.lifes, x_pos=10, y_pos=380)
-    game_text.level_text(screen=screen, x_pos=10, y_pos=360)
+    game_text.show_text(screen=screen, x_pos=10, y_pos=380, font_size=15, message=f"Lifes: {spaceship.lifes}")
+    game_text.show_text(screen=screen, x_pos=10, y_pos=360, font_size=15, message=f"Level: {game_text.level}")
     
     spaceship.create_spaceship(spaceship=spaceship, screen=screen)
     spaceship.move_spaceship(key=key)

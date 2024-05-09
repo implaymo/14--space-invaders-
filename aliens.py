@@ -28,11 +28,11 @@ class AlienImg():
             self.all_aliens.append([]) 
             for i in range(self.total_alien_per_row):
                 new_alien = AlienImg()
-                next_col_pos = i * self.col_gap_between_aliens
-                new_alien.alien_x_pos = self.alien_x_pos + next_col_pos
+                col_pos = i * self.col_gap_between_aliens
+                new_alien.alien_x_pos = self.alien_x_pos + col_pos
 
-                next_row_pos = row * self.row_gap_between_aliens
-                new_alien.alien_y_pos = self.alien_y_pos + next_row_pos
+                row_pos = row * self.row_gap_between_aliens
+                new_alien.alien_y_pos = self.alien_y_pos + row_pos
 
                 new_alien.alien_rect = new_alien.alien_resized.get_rect(topleft=(new_alien.alien_x_pos, new_alien.alien_y_pos))
                 new_alien.alien_rect.inflate_ip(-10, -5)
