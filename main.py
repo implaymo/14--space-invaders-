@@ -56,8 +56,15 @@ def spawn_spaceship_bullets():
         bullet = Bullet(bullet_x_pos=mid_of_spaceship, bullet_y_pos=top_of_spaceship, number_of_bullets=1, is_alien=False)
         bullet.add_bullet(spaceship.total_spaceship_bullets)
 
+
+def show_level_up_message():
+    game_text.level_up_text(screen=screen, x_pos=70, y_pos=200)
+    pygame.display.flip()
+    pygame.event.pump()
+    pygame.time.delay(1000)
         
 def level_up():
+    """Resets variables and increases some variables to make game harder"""
     global bullet_speed
     show_level_up_message()
     time_tracker.start_game()
@@ -75,11 +82,6 @@ def level_up():
     game_text.level += 1
     aliens.wiped = False
 
-def show_level_up_message():
-    game_text.level_up_text(screen=screen, x_pos=70, y_pos=200)
-    pygame.display.flip()
-    pygame.event.pump()
-    pygame.time.delay(1000)
 
 time_tracker.start_game()   
 running = True
