@@ -4,8 +4,6 @@ from projectil import Bullet
 from aliens import AlienImg
 from check_time import TimeTracker
 from game_text import GameText
-import time
-
 
 pygame.init()
 screen = pygame.display.set_mode((600,400))
@@ -43,7 +41,7 @@ def spawn_alien_bullets():
             bullet.add_bullet(aliens.total_aliens_bullets)
             bullet_was_shot = True
             if bullet_was_shot:
-                time_tracker.threshold += 2
+                time_tracker.threshold += time_tracker.random_shooting_timing
                 bullet_was_shot = False
     else:
         aliens.wiped = True
@@ -63,27 +61,21 @@ def show_total_lifes_message():
 
 def level_up():
     """Resets variables and increases some variables to make game harder"""
-    global bullet_speed
     game_text.show_info_delay(screen=screen, x_pos=70, y_pos=200, font_size=40, message=f"LEVEL {game_text.level}! MORE SPEED!")
     time_tracker.threshold = 2
-    aliens.total_aliens_bullets = []
-    aliens.all_aliens = []
-    aliens.total_alien_per_row += 1
-    if aliens.number_rows < 5:
-        aliens.number_rows += 1
-    else:
-        aliens.number_rows = 5
-    if aliens.alien_y_pos == 160:
-        aliens.alien_y_pos = 160
-    else:
-        aliens.alien_y_pos += 20
-    aliens.store_aliens()
-    bullet_speed += 1
-    spaceship.spaceship_x_pos = 270
-    game_text.level += 1
+    aliens.clear_aleans()
+    aliens.clear_bullets()
+    aliens.reset_aliens()
+    increase_bullet_speed()
+    spaceship.reset_spaceship_pos()
+    game_text.increase_level()
     time_tracker.start_game()
     aliens.wiped = False
 
+def increase_bullet_speed():
+    global bullet_speed
+    bullet_speed += 1
+    
 
 def restart_same_level():
     game_text.show_info_delay(screen=screen, x_pos=150, y_pos=200, font_size=25, message=f"You lost 1 life! Lifes left: {spaceship.lifes}")

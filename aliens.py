@@ -74,7 +74,32 @@ class AlienImg():
         except IndexError:
             self.wiped = True
 
-
+    def reset_aliens(self):
+        self.max_aliens()
+        self.max_rows()
+        self.max_y_pos
+        self.store_aliens()
         
+    def max_aliens(self):
+        if self.total_alien_per_row < 15:
+            self.total_alien_per_row += 1
+        else:
+            self.total_alien_per_row = 15
+    
+    def max_rows(self):
+        if self.number_rows < 5:
+            self.number_rows += 1
+        else:
+            self.number_rows = 5
         
+    def max_y_pos(self):
+        if self.alien_y_pos == 160:
+            self.alien_y_pos = 160
+        else:
+            self.alien_y_pos += 20
         
+    def clear_bullets(self):
+        self.total_aliens_bullets = []
+    
+    def clear_aleans(self):
+        self.all_aliens = []

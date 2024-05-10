@@ -18,3 +18,6 @@ class GameText():
         pygame.display.flip()
         pygame.event.pump()
         pygame.time.delay(1000)
+        
+    def increase_level(self):
+        self.level += 1

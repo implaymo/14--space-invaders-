@@ -50,3 +50,5 @@ class SpaceShipImg():
                 self.lose_life()
                 return True
             
+    def reset_spaceship_pos(self):
+        self.spaceship_x_pos = 270
