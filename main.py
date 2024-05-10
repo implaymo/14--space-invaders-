@@ -56,26 +56,16 @@ def spawn_spaceship_bullets():
         bullet = Bullet(bullet_x_pos=mid_of_spaceship, bullet_y_pos=top_of_spaceship, number_of_bullets=1, is_alien=False)
         bullet.add_bullet(spaceship.total_spaceship_bullets)
     elif spaceship.lifes < 1:
-        restart_game()
+        restart_last_level()
 
 
-def show_level_up_message():
-    game_text.show_text(screen=screen, x_pos=70, y_pos=200, font_size=40, message=f"LEVEL {game_text.level}! MORE SPEED!")
-    pygame.display.flip()
-    pygame.event.pump()
-    pygame.time.delay(1000)
+def show_total_lifes_message():
+    pass
 
-def show_game_over_message():
-    game_text.show_text(screen=screen, x_pos=175, y_pos=200, font_size=40, message=f"GAME OVER!")
-    game_text.show_text(screen=screen, x_pos=180, y_pos=250, font_size=20, message=f"TRY AGAIN? CLICK HERE")
-    pygame.display.flip()
-    pygame.event.pump()
-    pygame.time.delay(5000)
-        
 def level_up():
     """Resets variables and increases some variables to make game harder"""
     global bullet_speed
-    show_level_up_message()
+    game_text.show_info_delay(screen=screen, x_pos=70, y_pos=200, font_size=40, message=f"LEVEL {game_text.level}! MORE SPEED!")
     time_tracker.threshold = 2
     aliens.total_aliens_bullets = []
     aliens.all_aliens = []
@@ -88,8 +78,6 @@ def level_up():
         aliens.alien_y_pos = 160
     else:
         aliens.alien_y_pos += 20
-
-
     aliens.store_aliens()
     bullet_speed += 1
     spaceship.spaceship_x_pos = 270
@@ -98,8 +86,8 @@ def level_up():
     aliens.wiped = False
 
 
-def restart_game():
-    show_game_over_message()
+def restart_last_level():
+    game_text.show_info_delay(screen=screen, x_pos=150, y_pos=200, font_size=25, message=f"You lost 1 life! Lifes left: {spaceship.lifes}")
     time_tracker.threshold = 2
     aliens.total_aliens_bullets = []
     aliens.all_aliens = []
@@ -122,8 +110,8 @@ while running:
     screen.fill("purple")
 
     
-    game_text.show_text(screen=screen, x_pos=10, y_pos=380, font_size=15, message=f"Lifes: {spaceship.lifes}")
-    game_text.show_text(screen=screen, x_pos=10, y_pos=360, font_size=15, message=f"Level: {game_text.level}")
+    game_text.show_info_current(screen=screen, x_pos=10, y_pos=380, font_size=15, message=f"Lifes: {spaceship.lifes}")
+    game_text.show_info_current(screen=screen, x_pos=10, y_pos=360, font_size=15, message=f"Level: {game_text.level}")
     
     spaceship.create_spaceship(spaceship=spaceship, screen=screen)
     spaceship.move_spaceship(key=key)
