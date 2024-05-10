@@ -55,6 +55,8 @@ def spawn_spaceship_bullets():
     if key[pygame.K_SPACE]:
         bullet = Bullet(bullet_x_pos=mid_of_spaceship, bullet_y_pos=top_of_spaceship, number_of_bullets=1, is_alien=False)
         bullet.add_bullet(spaceship.total_spaceship_bullets)
+    elif spaceship.lifes < 1:
+        restart_game()
 
 
 def show_level_up_message():
@@ -62,6 +64,13 @@ def show_level_up_message():
     pygame.display.flip()
     pygame.event.pump()
     pygame.time.delay(1000)
+
+def show_game_over_message():
+    game_text.show_text(screen=screen, x_pos=175, y_pos=200, font_size=40, message=f"GAME OVER!")
+    game_text.show_text(screen=screen, x_pos=180, y_pos=250, font_size=20, message=f"TRY AGAIN? CLICK HERE")
+    pygame.display.flip()
+    pygame.event.pump()
+    pygame.time.delay(5000)
         
 def level_up():
     """Resets variables and increases some variables to make game harder"""
@@ -88,6 +97,19 @@ def level_up():
     time_tracker.start_game()
     aliens.wiped = False
 
+
+def restart_game():
+    show_game_over_message()
+    time_tracker.threshold = 2
+    aliens.total_aliens_bullets = []
+    aliens.all_aliens = []
+    aliens.store_aliens()
+    aliens.create_aliens(screen=screen)
+    aliens.move_aliens()
+    spaceship.spaceship_x_pos = 270
+    spaceship.lifes = 1
+    time_tracker.start_game()
+    aliens.wiped = False
 
 time_tracker.start_game()   
 running = True
