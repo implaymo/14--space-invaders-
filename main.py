@@ -71,8 +71,12 @@ def level_up():
     aliens.total_aliens_bullets = []
     aliens.all_aliens = []
     aliens.total_alien_per_row += 1
-    if aliens.alien_y_pos == 200:
-        aliens.alien_y_pos = 200
+    if aliens.number_rows < 5:
+        aliens.number_rows += 1
+    else:
+        aliens.number_rows = 5
+    if aliens.alien_y_pos == 160:
+        aliens.alien_y_pos = 160
     else:
         aliens.alien_y_pos += 20
 
