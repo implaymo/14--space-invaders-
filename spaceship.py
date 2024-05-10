@@ -8,7 +8,7 @@ class SpaceShipImg():
         self.spaceship_img = pygame.image.load(self.image_path).convert_alpha()
         self.spaceship_resized = pygame.transform.scale(self.spaceship_img, (40, 70))
         self.spaceship_rect = self.spaceship_resized.get_rect()
-        self.spaceship_rect.inflate_ip(-25, 0)
+        self.spaceship_rect.inflate_ip(-30, 0)
         
         self.spaceship_x_pos = 270
         self.spaceship_y_pos = 320
@@ -29,7 +29,7 @@ class SpaceShipImg():
             self.spaceship_x_pos += 5
             if self.spaceship_x_pos > 560:
                 self.spaceship_x_pos = 560
-        self.spaceship_rect.topleft = (self.spaceship_x_pos + 10, self.spaceship_y_pos + 12)
+        self.spaceship_rect.topleft = (self.spaceship_x_pos + 10, self.spaceship_y_pos + 23)
 
         
                 
