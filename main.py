@@ -11,7 +11,7 @@ pygame.init()
 screen = pygame.display.set_mode((600,400))
 clock = pygame.time.Clock()
 pygame.display.set_caption("Space Invaders")
-spaceship = SpaceShipImg(lifes=1)
+spaceship = SpaceShipImg(lifes=2)
 aliens = AlienImg()
 time_tracker = TimeTracker()
 game_text = GameText()
@@ -55,8 +55,7 @@ def spawn_spaceship_bullets():
     if key[pygame.K_SPACE]:
         bullet = Bullet(bullet_x_pos=mid_of_spaceship, bullet_y_pos=top_of_spaceship, number_of_bullets=1, is_alien=False)
         bullet.add_bullet(spaceship.total_spaceship_bullets)
-    elif spaceship.lifes < 1:
-        restart_last_level()
+
 
 
 def show_total_lifes_message():
@@ -86,7 +85,7 @@ def level_up():
     aliens.wiped = False
 
 
-def restart_last_level():
+def restart_same_level():
     game_text.show_info_delay(screen=screen, x_pos=150, y_pos=200, font_size=25, message=f"You lost 1 life! Lifes left: {spaceship.lifes}")
     time_tracker.threshold = 2
     aliens.total_aliens_bullets = []
@@ -95,9 +94,13 @@ def restart_last_level():
     aliens.create_aliens(screen=screen)
     aliens.move_aliens()
     spaceship.spaceship_x_pos = 270
-    spaceship.lifes = 1
     time_tracker.start_game()
     aliens.wiped = False
+
+def game_over():
+    game_text.show_info_delay(screen=screen, x_pos=150, y_pos=200, font_size=40, message="GAME OVER")
+    
+
 
 time_tracker.start_game()   
 running = True
@@ -134,6 +137,11 @@ while running:
 
     if spaceship.check_collision_bullet(total_aliens_bullets=aliens.total_aliens_bullets):
         bullet_hit_target = True
+        if spaceship.lifes < 1:
+            game_over()
+        else:
+            restart_same_level()
+
 
 
     
