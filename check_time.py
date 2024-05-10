@@ -19,3 +19,5 @@ class TimeTracker():
         elapsed_time = self.get_elapsed_time()
         return elapsed_time >= self.threshold
         
+    def reset_threshold(self):
+        self.threshold = 2

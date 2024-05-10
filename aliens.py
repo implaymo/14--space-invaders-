@@ -101,5 +101,5 @@ class AlienImg():
     def clear_bullets(self):
         self.total_aliens_bullets = []
     
-    def clear_aleans(self):
+    def clear_aliens(self):
         self.all_aliens = []

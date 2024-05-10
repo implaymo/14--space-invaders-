@@ -62,8 +62,8 @@ def show_total_lifes_message():
 def level_up():
     """Resets variables and increases some variables to make game harder"""
     game_text.show_info_delay(screen=screen, x_pos=70, y_pos=200, font_size=40, message=f"LEVEL {game_text.level}! MORE SPEED!")
-    time_tracker.threshold = 2
-    aliens.clear_aleans()
+    time_tracker.reset_threshold()
+    aliens.clear_aliens()
     aliens.clear_bullets()
     aliens.reset_aliens()
     increase_bullet_speed()
@@ -79,13 +79,13 @@ def increase_bullet_speed():
 
 def restart_same_level():
     game_text.show_info_delay(screen=screen, x_pos=150, y_pos=200, font_size=25, message=f"You lost 1 life! Lifes left: {spaceship.lifes}")
-    time_tracker.threshold = 2
-    aliens.total_aliens_bullets = []
-    aliens.all_aliens = []
+    time_tracker.reset_threshold()
+    aliens.clear_aliens()
+    aliens.clear_bullets()
     aliens.store_aliens()
     aliens.create_aliens(screen=screen)
     aliens.move_aliens()
-    spaceship.spaceship_x_pos = 270
+    spaceship.reset_spaceship_pos()
     time_tracker.start_game()
     aliens.wiped = False
 
