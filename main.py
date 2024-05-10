@@ -7,6 +7,7 @@ from game_text import GameText
 
 pygame.init()
 screen = pygame.display.set_mode((600,400))
+background = pygame.image.load('images/space_background.jpg')
 clock = pygame.time.Clock()
 pygame.display.set_caption("Space Invaders")
 spaceship = SpaceShipImg(lifes=2)
@@ -14,9 +15,7 @@ aliens = AlienImg()
 time_tracker = TimeTracker()
 game_text = GameText()
 
-
 aliens.store_aliens()
-
 bullet_hit_target = False
 bullet_speed = 2
 
@@ -54,10 +53,6 @@ def spawn_spaceship_bullets():
         bullet = Bullet(bullet_x_pos=mid_of_spaceship, bullet_y_pos=top_of_spaceship, number_of_bullets=1, is_alien=False)
         bullet.add_bullet(spaceship.total_spaceship_bullets)
 
-
-
-def show_total_lifes_message():
-    pass
 
 def level_up():
     """Resets variables and increases some variables to make game harder"""
@@ -102,7 +97,8 @@ while running:
             running = False
 
     key = pygame.key.get_pressed()
-    screen.fill("purple")
+    screen.fill((0, 0, 0))                       
+    screen.blit(background, (0,0))
 
     
     game_text.show_info_current(screen=screen, x_pos=10, y_pos=380, font_size=15, message=f"Lifes: {spaceship.lifes}")
@@ -143,5 +139,3 @@ while running:
     clock.tick(60)
 
 pygame.quit()
-
-

@@ -77,7 +77,7 @@ class AlienImg():
     def reset_aliens(self):
         self.max_aliens()
         self.max_rows()
-        self.max_y_pos
+        self.max_y_pos()
         self.store_aliens()
         
     def max_aliens(self):

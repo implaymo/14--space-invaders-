@@ -4,7 +4,7 @@ import random
 class TimeTracker():
     def __init__(self) -> None:
         self.start_time = None
-        self.random_shooting_timing = random.uniform(1.0, 3.0)
+        self.random_shooting_timing = random.uniform(1.0, 4.0)
         self.threshold = self.random_shooting_timing
         
     def start_game(self):
