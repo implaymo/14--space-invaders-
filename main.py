@@ -66,7 +66,7 @@ def level_up():
 
 def restart_same_level():
     """Resets variables and keeps the game at the same level the user was playing"""
-    game_text.delay_message(screen=screen, x_pos=150, y_pos=200, font_size=25, message=f"Lifes left: {spaceship.lifes}")
+    game_text.delay_message(screen=screen, x_pos=220, y_pos=60, font_size=25, message=f"Lifes left: {spaceship.lifes}")
     time_tracker.reset_threshold()
     aliens.clear_aliens()
     aliens.clear_bullets()
@@ -77,12 +77,12 @@ def restart_same_level():
     time_tracker.start_game()
     aliens.wiped = False
     
-def restart_game():
+def reset_game():
     """Reset all game variables"""
     global game_state
+    level.level = 1
     game_text.delay_message(screen=screen, x_pos=240, y_pos=70, font_size=30, message=f"Level: {level.level}")
     spaceship.lifes = 1
-    level.level = 1
     time_tracker.reset_threshold()
     aliens.clear_aliens()
     aliens.clear_bullets()
@@ -108,7 +108,7 @@ background_image = pygame.image.load('images/space_background.jpg')
 clock = pygame.time.Clock()
 pygame.display.set_caption("Space Invaders")
 
-spaceship = SpaceShipImg(lifes=1)
+spaceship = SpaceShipImg(lifes=2)
 aliens = AlienImg()
 time_tracker = TimeTracker()
 game_text = GameText()
@@ -139,7 +139,7 @@ while running:
                         game_state = "game"
                 elif game_state == "game_over":
                     if restart_button.button_rect.collidepoint(event.pos):
-                        restart_game()
+                        reset_game()
                     elif quit_button.button_rect.collidepoint(event.pos):
                         sys.exit()
                 
@@ -173,7 +173,7 @@ while running:
 
         if spaceship.check_collision_bullet(total_aliens_bullets=aliens.total_aliens_bullets):
             bullet_hit_target = True
-            if spaceship.lifes < 1:
+            if spaceship.lifes > 1:
                 game_over()
                 game_state = "game_over"
             else:
