@@ -16,9 +16,7 @@ class Button():
         
     def create_button(self, screen):
         self.button_rect = pygame.draw.rect(screen, self.green, (self.x_pos, self.y_pos, self.width, self.height))
-        text = self.font.render("START GAME", True, self.blue)
+        text = self.font.render(self.text, True, self.blue)
         text_rect = text.get_rect(center=(self.x_pos + self.width / 2, self.y_pos + self.height / 2))
         screen.blit(text, text_rect)
         
-    def is_clicked(self):
-        pass
