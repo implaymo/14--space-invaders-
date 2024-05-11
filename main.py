@@ -108,15 +108,15 @@ background_image = pygame.image.load('images/space_background.jpg')
 clock = pygame.time.Clock()
 pygame.display.set_caption("Space Invaders")
 
-spaceship = SpaceShipImg(lifes=2)
+spaceship = SpaceShipImg(lifes=1)
 aliens = AlienImg()
 time_tracker = TimeTracker()
 game_text = GameText()
 level = Level()
 
-start_button = Button(width=120, height=30, x_pos=240, y_pos=200,text="START GAME", font_size=40)
-quit_button = Button(width=120, height=30, x_pos=240, y_pos=160, bg_color="red", text_color="black",text="QUIT GAME", font_size=40)
-restart_button = Button(width=120, height=30, x_pos=240, y_pos=250, text="TRY AGAIN", font_size=40)
+start_button = Button(width=150, height=70, x_pos=225, y_pos=150)
+quit_button = Button(width=100, height=30, x_pos=250, y_pos=170)
+restart_button =  Button(width=100, height=30, x_pos=250, y_pos=220)
 
 aliens.store_aliens()
 bullet_hit_target = False
@@ -135,7 +135,7 @@ while running:
         if game_state == "start_menu" or game_state == "game_over":
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if game_state == "start_menu":
-                    if start_button.button_rect.collidepoint(event.pos):
+                    if start_button.image_rect.collidepoint(event.pos):
                         game_state = "game"
                 elif game_state == "game_over":
                     if restart_button.button_rect.collidepoint(event.pos):
@@ -144,7 +144,7 @@ while running:
                         sys.exit()
                 
     if game_state == "start_menu":
-        start_menu = StartMenu(screen=screen,start_button=start_button.create_button(screen=screen)) 
+        start_menu = StartMenu(screen=screen, start_button=start_button.start_button(screen, path="start_button.png"))
         
     elif game_state == "game":     
         key = pygame.key.get_pressed()
@@ -173,7 +173,7 @@ while running:
 
         if spaceship.check_collision_bullet(total_aliens_bullets=aliens.total_aliens_bullets):
             bullet_hit_target = True
-            if spaceship.lifes > 1:
+            if spaceship.lifes < 1:
                 game_over()
                 game_state = "game_over"
             else:
@@ -184,6 +184,7 @@ while running:
         clock.tick(60)
     
     elif game_state == "game_over":
-        game_over_menu = GameOverMenu(screen=screen, restart_button=restart_button.create_button(screen=screen), quit_button=quit_button.create_button(screen=screen))
+        game_over_menu = GameOverMenu(screen=screen, restart_button=restart_button.create_button(screen=screen,font_size=25, text_color="green", bg_color="blue", text="Try Again"), 
+                                      quit_button=quit_button.create_button(screen=screen, font_size=25, text_color="green", bg_color="blue", text="Quit Game"))
 
 pygame.quit()
