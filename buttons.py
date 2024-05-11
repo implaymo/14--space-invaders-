@@ -1,7 +1,7 @@
 import pygame
 
 class Button():
-    def __init__(self, width, height, x_pos, y_pos, text, text_color, bg_color, font_size=15) -> None:
+    def __init__(self, width, height, x_pos, y_pos, text, text_color="blue", bg_color="green", font_size=15) -> None:
         self.x_pos = x_pos
         self.y_pos = y_pos
         self.width = width

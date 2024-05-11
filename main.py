@@ -52,7 +52,7 @@ def increase_bullet_speed():
 
 def level_up():
     """Resets variables and increases some variables to make game harder"""
-    game_text.delay_message(screen=screen, x_pos=70, y_pos=200, font_size=40, message=f"LEVEL UP {level.level + 1}!")
+    game_text.delay_message(screen=screen, x_pos=100, y_pos=200,font_size=40, message=f"LEVEL UP {level.level + 1}!")
     time_tracker.reset_threshold()
     aliens.clear_aliens()
     aliens.clear_bullets()
@@ -80,7 +80,7 @@ def restart_same_level():
 def restart_game():
     """Reset all game variables"""
     global game_state
-    game_text.delay_message(screen=screen, x_pos=150, y_pos=200, font_size=25, message=f"Level: {level.level}")
+    game_text.delay_message(screen=screen, x_pos=240, y_pos=70, font_size=30, message=f"Level: {level.level}")
     spaceship.lifes = 1
     level.level = 1
     time_tracker.reset_threshold()
@@ -114,9 +114,9 @@ time_tracker = TimeTracker()
 game_text = GameText()
 level = Level()
 
-start_button = Button(width=120, height=30, x_pos=240, y_pos=200, bg_color="green", text_color="black",text="START GAME", font_size=40)
+start_button = Button(width=120, height=30, x_pos=240, y_pos=200,text="START GAME", font_size=40)
 quit_button = Button(width=120, height=30, x_pos=240, y_pos=160, bg_color="red", text_color="black",text="QUIT GAME", font_size=40)
-restart_button = Button(width=120, height=30, x_pos=240, y_pos=250, bg_color="green", text_color="black", text="TRY AGAIN", font_size=40)
+restart_button = Button(width=120, height=30, x_pos=240, y_pos=250, text="TRY AGAIN", font_size=40)
 
 aliens.store_aliens()
 bullet_hit_target = False
@@ -149,8 +149,8 @@ while running:
         screen.fill((0, 0, 0))                       
         screen.blit(background_image, (0,0))
         
-        game_text.show_game_info(screen=screen, x_pos=10, y_pos=380, text_color="green", font_size=15, message=f"Lifes: {spaceship.lifes}")
-        game_text.show_game_info(screen=screen, x_pos=10, y_pos=360, text_color="green", font_size=15, message=f"Level: {level.level}")
+        game_text.show_game_info(screen=screen, x_pos=10, y_pos=380, font_size=15, message=f"Lifes: {spaceship.lifes}")
+        game_text.show_game_info(screen=screen, x_pos=10, y_pos=360, font_size=15, message=f"Level: {level.level}")
         
         spaceship.create_spaceship(spaceship=spaceship, screen=screen)
         spaceship.move_spaceship(key=key)
