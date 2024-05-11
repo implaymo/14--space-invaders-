@@ -6,6 +6,7 @@ from check_time import TimeTracker
 from game_text import GameText
 from buttons import Button
 from start_menu import StartMenu
+from level import Level
 
 def shot_bullet(total_bullets_list, direction):
     global bullet_hit_target
@@ -49,21 +50,21 @@ def increase_bullet_speed():
 
 def level_up():
     """Resets variables and increases some variables to make game harder"""
-    game_text.show_info_delay(screen=screen, x_pos=70, y_pos=200, font_size=40, message=f"LEVEL {game_text.level}! MORE SPEED!")
+    game_text.delay_message(screen=screen, x_pos=70, y_pos=200, font_size=40, message=f"LEVEL {level.level}! MORE SPEED!")
     time_tracker.reset_threshold()
     aliens.clear_aliens()
     aliens.clear_bullets()
     aliens.reset_aliens()
     increase_bullet_speed()
     spaceship.reset_spaceship_pos()
-    game_text.increase_level()
+    level.increase_level()
     time_tracker.start_game()
     aliens.wiped = False
 
 
 def restart_same_level():
     """Resets variables and keeps the game at the same level the user was playing"""
-    game_text.show_info_delay(screen=screen, x_pos=150, y_pos=200, font_size=25, message=f"HIT! You lost 1 life! Lifes left: {spaceship.lifes}")
+    game_text.delay_message(screen=screen, x_pos=150, y_pos=200, font_size=25, message=f"HIT! You lost 1 life! Lifes left: {spaceship.lifes}")
     time_tracker.reset_threshold()
     aliens.clear_aliens()
     aliens.clear_bullets()
@@ -76,7 +77,7 @@ def restart_same_level():
 
 def game_over():
     """Ends Game"""
-    game_text.show_info_delay(screen=screen, x_pos=150, y_pos=200, font_size=40, message="GAME OVER")
+    game_text.delay_message(screen=screen, x_pos=150, y_pos=200, font_size=40, message="GAME OVER")
   
   
 # GAME SETUP   
@@ -89,6 +90,7 @@ spaceship = SpaceShipImg(lifes=2)
 aliens = AlienImg()
 time_tracker = TimeTracker()
 game_text = GameText()
+level = Level()
 start_button = Button(width=120, height=30, x_pos=240, y_pos=200, text="START GAME", font_size=40)
 aliens.store_aliens()
 bullet_hit_target = False
@@ -109,15 +111,15 @@ while running:
                 game_state = "game"
                 
     if game_state == "start_menu":
-        start_menu = StartMenu(screen=screen, start_button=start_button.create_button(screen=screen)) 
-    
+        start_menu = StartMenu(screen=screen,start_button=start_button.create_button(screen=screen), background_image=background) 
+        
     elif game_state == "game":     
         key = pygame.key.get_pressed()
         screen.fill((0, 0, 0))                       
         screen.blit(background, (0,0))
                    
-        game_text.show_info_current(screen=screen, x_pos=10, y_pos=380, font_size=15, message=f"Lifes: {spaceship.lifes}")
-        game_text.show_info_current(screen=screen, x_pos=10, y_pos=360, font_size=15, message=f"Level: {game_text.level}")
+        game_text.show_game_info(screen=screen, x_pos=10, y_pos=380, font_size=15, message=f"Lifes: {spaceship.lifes}")
+        game_text.show_game_info(screen=screen, x_pos=10, y_pos=360, font_size=15, message=f"Level: {level.level}")
         
         spaceship.create_spaceship(spaceship=spaceship, screen=screen)
         spaceship.move_spaceship(key=key)
@@ -146,5 +148,8 @@ while running:
         pygame.display.update()
         pygame.display.flip()
         clock.tick(60)
+    
+    elif game_state == "game_over":
+        pass
 
 pygame.quit()
