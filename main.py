@@ -52,7 +52,7 @@ def increase_bullet_speed():
 
 def level_up():
     """Resets variables and increases some variables to make game harder"""
-    game_text.delay_message(screen=screen, x_pos=100, y_pos=200,font_size=40, message=f"LEVEL UP {level.level + 1}!")
+    game_text.delay_message(screen=screen, x_pos=180, y_pos=180,font_size=40, message=f"LEVEL UP {level.level + 1}!")
     time_tracker.reset_threshold()
     aliens.clear_aliens()
     aliens.clear_bullets()
