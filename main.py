@@ -144,7 +144,7 @@ while running:
                         sys.exit()
                 
     if game_state == "start_menu":
-        start_menu = StartMenu(screen=screen, start_button=start_button.start_button(screen, path="start_button.png"))
+        start_menu = StartMenu(screen=screen, start_button=start_button.image_button(screen, path="start_button.png"))
         
     elif game_state == "game":     
         key = pygame.key.get_pressed()

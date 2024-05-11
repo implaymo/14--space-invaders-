@@ -8,7 +8,7 @@ class Button():
         self.x_pos = x_pos
         self.y_pos = y_pos
 
-    def start_button(self, screen, path):
+    def image_button(self, screen, path):
         self.image_path = os.path.join("images", path)
         self.image = pygame.image.load(self.image_path).convert_alpha()
         self.image_resized = pygame.transform.scale(self.image, (self.width, self.height))
