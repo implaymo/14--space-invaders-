@@ -5,6 +5,7 @@ from aliens import AlienImg
 from check_time import TimeTracker
 from game_text import GameText
 from buttons import Button
+from start_menu import StartMenu
 
 def shot_bullet(total_bullets_list, direction):
     global bullet_hit_target
@@ -88,11 +89,13 @@ spaceship = SpaceShipImg(lifes=2)
 aliens = AlienImg()
 time_tracker = TimeTracker()
 game_text = GameText()
-button = Button(width=120, height=30, x_pos=240, y_pos=200, text="START GAME", font_size=40)
+start_button = Button(width=120, height=30, x_pos=240, y_pos=200, text="START GAME", font_size=40)
 aliens.store_aliens()
 bullet_hit_target = False
 bullet_speed = 2
 time_tracker.start_game()
+game_state = "start_menu"
+
 
 # GAME MAINLOOP
 running = True
@@ -102,53 +105,46 @@ while running:
             running = False
             
         elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            if button.button_rect.collidepoint(event.pos):
-                print("Button clicked!")
+            if start_button.button_rect.collidepoint(event.pos):
+                game_state == "game"
                 
-    key = pygame.key.get_pressed()
-    screen.fill((0, 0, 0))                       
-    screen.blit(background, (0,0))
+    if game_state == "start_menu":
+        start_menu = StartMenu(screen=screen, start_button=start_button.create_button(screen=screen)) 
     
+    elif game_state == "game":     
+        key = pygame.key.get_pressed()
+        screen.fill((0, 0, 0))                       
+        screen.blit(background, (0,0))
+                   
+        game_text.show_info_current(screen=screen, x_pos=10, y_pos=380, font_size=15, message=f"Lifes: {spaceship.lifes}")
+        game_text.show_info_current(screen=screen, x_pos=10, y_pos=360, font_size=15, message=f"Level: {game_text.level}")
+        
+        spaceship.create_spaceship(spaceship=spaceship, screen=screen)
+        spaceship.move_spaceship(key=key)
+        
+        aliens.create_aliens(screen=screen)
+        aliens.move_aliens()
+        
 
-    button.create_button(screen)
+        shot_bullet(spaceship.total_spaceship_bullets, direction=-1)
+        shot_bullet(aliens.total_aliens_bullets, direction=1)
+        
+        spawn_alien_bullets()
+        spawn_spaceship_bullets()
+        
+        # Check Collisions
+        if aliens.check_collision_bullets(total_spaceship_bullets=spaceship.total_spaceship_bullets):
+            bullet_hit_target = True
 
+        if spaceship.check_collision_bullet(total_aliens_bullets=aliens.total_aliens_bullets):
+            bullet_hit_target = True
+            if spaceship.lifes < 1:
+                game_over()
+            else:
+                restart_same_level()
 
-                
-    game_text.show_info_current(screen=screen, x_pos=10, y_pos=380, font_size=15, message=f"Lifes: {spaceship.lifes}")
-    game_text.show_info_current(screen=screen, x_pos=10, y_pos=360, font_size=15, message=f"Level: {game_text.level}")
-    
-    spaceship.create_spaceship(spaceship=spaceship, screen=screen)
-    spaceship.move_spaceship(key=key)
-    
-    aliens.create_aliens(screen=screen)
-    aliens.move_aliens()
-    
-
-    shot_bullet(spaceship.total_spaceship_bullets, direction=-1)
-    shot_bullet(aliens.total_aliens_bullets, direction=1)
-    
-    spawn_alien_bullets()
-    spawn_spaceship_bullets()
-    
-
-
-    # Check Collisions
-    if aliens.check_collision_bullets(total_spaceship_bullets=spaceship.total_spaceship_bullets):
-        bullet_hit_target = True
-
-    if spaceship.check_collision_bullet(total_aliens_bullets=aliens.total_aliens_bullets):
-        bullet_hit_target = True
-        if spaceship.lifes < 1:
-            game_over()
-        else:
-            restart_same_level()
-
-
-
-    
-    pygame.display.update()
-    pygame.display.flip()
-
-    clock.tick(60)
+        pygame.display.update()
+        pygame.display.flip()
+        clock.tick(60)
 
 pygame.quit()
