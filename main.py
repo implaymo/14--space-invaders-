@@ -106,7 +106,7 @@ while running:
             
         elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             if start_button.button_rect.collidepoint(event.pos):
-                game_state == "game"
+                game_state = "game"
                 
     if game_state == "start_menu":
         start_menu = StartMenu(screen=screen, start_button=start_button.create_button(screen=screen)) 
