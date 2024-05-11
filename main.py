@@ -4,20 +4,7 @@ from projectil import Bullet
 from aliens import AlienImg
 from check_time import TimeTracker
 from game_text import GameText
-
-pygame.init()
-screen = pygame.display.set_mode((600,400))
-background = pygame.image.load('images/space_background.jpg')
-clock = pygame.time.Clock()
-pygame.display.set_caption("Space Invaders")
-spaceship = SpaceShipImg(lifes=2)
-aliens = AlienImg()
-time_tracker = TimeTracker()
-game_text = GameText()
-
-aliens.store_aliens()
-bullet_hit_target = False
-bullet_speed = 2
+from buttons import Button
 
 def shot_bullet(total_bullets_list, direction):
     global bullet_hit_target
@@ -33,6 +20,7 @@ def shot_bullet(total_bullets_list, direction):
 
 
 def spawn_alien_bullets():
+    """Choses a random alien to shot/Checks if aliens got wiped"""
     random_alien = aliens.choose_alien_shot()
     if random_alien is not None:
         if time_tracker.is_game_live():
@@ -54,6 +42,10 @@ def spawn_spaceship_bullets():
         bullet.add_bullet(spaceship.total_spaceship_bullets)
 
 
+def increase_bullet_speed():
+    global bullet_speed
+    bullet_speed += 1
+
 def level_up():
     """Resets variables and increases some variables to make game harder"""
     game_text.show_info_delay(screen=screen, x_pos=70, y_pos=200, font_size=40, message=f"LEVEL {game_text.level}! MORE SPEED!")
@@ -67,12 +59,9 @@ def level_up():
     time_tracker.start_game()
     aliens.wiped = False
 
-def increase_bullet_speed():
-    global bullet_speed
-    bullet_speed += 1
-    
 
 def restart_same_level():
+    """Resets variables and keeps the game at the same level the user was playing"""
     game_text.show_info_delay(screen=screen, x_pos=150, y_pos=200, font_size=25, message=f"HIT! You lost 1 life! Lifes left: {spaceship.lifes}")
     time_tracker.reset_threshold()
     aliens.clear_aliens()
@@ -85,22 +74,46 @@ def restart_same_level():
     aliens.wiped = False
 
 def game_over():
+    """Ends Game"""
     game_text.show_info_delay(screen=screen, x_pos=150, y_pos=200, font_size=40, message="GAME OVER")
-    
+  
+  
+# GAME SETUP   
+pygame.init()
+screen = pygame.display.set_mode((600,400))
+background = pygame.image.load('images/space_background.jpg')
+clock = pygame.time.Clock()
+pygame.display.set_caption("Space Invaders")
+spaceship = SpaceShipImg(lifes=2)
+aliens = AlienImg()
+time_tracker = TimeTracker()
+game_text = GameText()
+button = Button(width=120, height=30, x_pos=240, y_pos=200, text="START GAME", font_size=40)
+aliens.store_aliens()
+bullet_hit_target = False
+bullet_speed = 2
+time_tracker.start_game()
 
-
-time_tracker.start_game()   
+# GAME MAINLOOP
 running = True
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
+            
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if button.button_rect.collidepoint(event.pos):
+                print("Button clicked!")
+                
     key = pygame.key.get_pressed()
     screen.fill((0, 0, 0))                       
     screen.blit(background, (0,0))
-
     
+
+    button.create_button(screen)
+
+
+                
     game_text.show_info_current(screen=screen, x_pos=10, y_pos=380, font_size=15, message=f"Lifes: {spaceship.lifes}")
     game_text.show_info_current(screen=screen, x_pos=10, y_pos=360, font_size=15, message=f"Level: {game_text.level}")
     
