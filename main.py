@@ -81,7 +81,7 @@ def reset_game():
     """Reset all game variables"""
     global game_state
     level.level = 1
-    game_text.delay_message(screen=screen, x_pos=240, y_pos=70, font_size=30, message=f"Level: {level.level}")
+    game_text.delay_message(screen=screen, x_pos=250, y_pos=70, font_size=30, background_color=None, message=f"Level: {level.level}")
     spaceship.lifes = 1
     time_tracker.reset_threshold()
     aliens.clear_aliens()
