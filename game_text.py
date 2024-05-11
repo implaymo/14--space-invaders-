@@ -17,7 +17,6 @@ class GameText():
         self.text = font.render(message, True, text_color, background_color)
         self.text_rect = self.text.get_rect()
         screen.blit(self.text, (x_pos, y_pos))
-
         pygame.display.flip()
         pygame.event.pump()
         pygame.time.delay(1000)

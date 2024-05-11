@@ -131,15 +131,17 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-            
-        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            if start_button.button_rect.collidepoint(event.pos):
-                game_state = "game"
-            elif restart_button.button_rect.collidepoint(event.pos):
-                restart_game()
-            elif quit_button.button_rect.collidepoint(event.pos):
-                sys.exit()
-                
+        
+        if game_state == "start_menu" or game_state == "game_over":
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                if game_state == "start_menu":
+                    if start_button.button_rect.collidepoint(event.pos):
+                        game_state = "game"
+                elif game_state == "game_over":
+                    if restart_button.button_rect.collidepoint(event.pos):
+                        restart_game()
+                    elif quit_button.button_rect.collidepoint(event.pos):
+                        sys.exit()
                 
     if game_state == "start_menu":
         start_menu = StartMenu(screen=screen,start_button=start_button.create_button(screen=screen)) 
