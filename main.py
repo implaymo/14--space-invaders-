@@ -7,8 +7,10 @@ from game_text import GameText
 from buttons import Button
 from start_menu import StartMenu
 from level import Level
+from game_over_menu import GameOverMenu
+import sys
 
-def shot_bullet(total_bullets_list, direction):
+def move_bullet(total_bullets_list, direction):
     global bullet_hit_target
     for bullet in total_bullets_list:
         if bullet_hit_target:
@@ -50,7 +52,7 @@ def increase_bullet_speed():
 
 def level_up():
     """Resets variables and increases some variables to make game harder"""
-    game_text.delay_message(screen=screen, x_pos=70, y_pos=200, font_size=40, message=f"LEVEL {level.level}! MORE SPEED!")
+    game_text.delay_message(screen=screen, x_pos=70, y_pos=200, font_size=40, message=f"LEVEL UP {level.level + 1}!")
     time_tracker.reset_threshold()
     aliens.clear_aliens()
     aliens.clear_bullets()
@@ -64,7 +66,7 @@ def level_up():
 
 def restart_same_level():
     """Resets variables and keeps the game at the same level the user was playing"""
-    game_text.delay_message(screen=screen, x_pos=150, y_pos=200, font_size=25, message=f"HIT! You lost 1 life! Lifes left: {spaceship.lifes}")
+    game_text.delay_message(screen=screen, x_pos=150, y_pos=200, font_size=25, message=f"Lifes left: {spaceship.lifes}")
     time_tracker.reset_threshold()
     aliens.clear_aliens()
     aliens.clear_bullets()
@@ -74,24 +76,48 @@ def restart_same_level():
     spaceship.reset_spaceship_pos()
     time_tracker.start_game()
     aliens.wiped = False
+    
+def restart_game():
+    """Reset all game variables"""
+    global game_state
+    game_text.delay_message(screen=screen, x_pos=150, y_pos=200, font_size=25, message=f"Level: {level.level}")
+    spaceship.lifes = 1
+    level.level = 1
+    time_tracker.reset_threshold()
+    aliens.clear_aliens()
+    aliens.clear_bullets()
+    aliens.store_aliens()
+    aliens.create_aliens(screen=screen)
+    aliens.move_aliens()
+    spaceship.reset_spaceship_pos()
+    time_tracker.start_game()
+    aliens.wiped = False
+    game_state = "game"
 
 def game_over():
-    """Ends Game"""
-    game_text.delay_message(screen=screen, x_pos=150, y_pos=200, font_size=40, message="GAME OVER")
-  
+    """End Game Message"""
+    game_text.delay_message(screen=screen, x_pos=170, y_pos=200, font_size=40, message="GAME OVER")
+
   
 # GAME SETUP   
 pygame.init()
-screen = pygame.display.set_mode((600,400))
-background = pygame.image.load('images/space_background.jpg')
+screen_width = 600
+screen_height = 400
+screen = pygame.display.set_mode((screen_width, screen_height))
+background_image = pygame.image.load('images/space_background.jpg')
 clock = pygame.time.Clock()
 pygame.display.set_caption("Space Invaders")
-spaceship = SpaceShipImg(lifes=2)
+
+spaceship = SpaceShipImg(lifes=1)
 aliens = AlienImg()
 time_tracker = TimeTracker()
 game_text = GameText()
 level = Level()
-start_button = Button(width=120, height=30, x_pos=240, y_pos=200, text="START GAME", font_size=40)
+
+start_button = Button(width=120, height=30, x_pos=240, y_pos=200, bg_color="green", text_color="black",text="START GAME", font_size=40)
+quit_button = Button(width=120, height=30, x_pos=240, y_pos=160, bg_color="red", text_color="black",text="QUIT GAME", font_size=40)
+restart_button = Button(width=120, height=30, x_pos=240, y_pos=250, bg_color="green", text_color="black", text="TRY AGAIN", font_size=40)
+
 aliens.store_aliens()
 bullet_hit_target = False
 bullet_speed = 2
@@ -109,17 +135,22 @@ while running:
         elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             if start_button.button_rect.collidepoint(event.pos):
                 game_state = "game"
+            elif restart_button.button_rect.collidepoint(event.pos):
+                restart_game()
+            elif quit_button.button_rect.collidepoint(event.pos):
+                sys.exit()
+                
                 
     if game_state == "start_menu":
-        start_menu = StartMenu(screen=screen,start_button=start_button.create_button(screen=screen), background_image=background) 
+        start_menu = StartMenu(screen=screen,start_button=start_button.create_button(screen=screen)) 
         
     elif game_state == "game":     
         key = pygame.key.get_pressed()
         screen.fill((0, 0, 0))                       
-        screen.blit(background, (0,0))
-                   
-        game_text.show_game_info(screen=screen, x_pos=10, y_pos=380, font_size=15, message=f"Lifes: {spaceship.lifes}")
-        game_text.show_game_info(screen=screen, x_pos=10, y_pos=360, font_size=15, message=f"Level: {level.level}")
+        screen.blit(background_image, (0,0))
+        
+        game_text.show_game_info(screen=screen, x_pos=10, y_pos=380, text_color="green", font_size=15, message=f"Lifes: {spaceship.lifes}")
+        game_text.show_game_info(screen=screen, x_pos=10, y_pos=360, text_color="green", font_size=15, message=f"Level: {level.level}")
         
         spaceship.create_spaceship(spaceship=spaceship, screen=screen)
         spaceship.move_spaceship(key=key)
@@ -128,8 +159,8 @@ while running:
         aliens.move_aliens()
         
 
-        shot_bullet(spaceship.total_spaceship_bullets, direction=-1)
-        shot_bullet(aliens.total_aliens_bullets, direction=1)
+        move_bullet(spaceship.total_spaceship_bullets, direction=-1)
+        move_bullet(aliens.total_aliens_bullets, direction=1)
         
         spawn_alien_bullets()
         spawn_spaceship_bullets()
@@ -142,6 +173,7 @@ while running:
             bullet_hit_target = True
             if spaceship.lifes < 1:
                 game_over()
+                game_state = "game_over"
             else:
                 restart_same_level()
 
@@ -150,6 +182,6 @@ while running:
         clock.tick(60)
     
     elif game_state == "game_over":
-        pass
+        game_over_menu = GameOverMenu(screen=screen, restart_button=restart_button.create_button(screen=screen), quit_button=quit_button.create_button(screen=screen))
 
 pygame.quit()

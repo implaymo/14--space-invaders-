@@ -1,2 +1,1 @@
-pygame.display.update()
-        pygame.display.flip()
+screen.fill((0, 0, 0))     
