@@ -87,10 +87,10 @@ def restart_same_level():
 def reset_game():
     """Reset all game variables"""
     global game_state, bullet_speed
-    game_text.delay_message(screen=screen, x_pos=30, y_pos=70, font_size=30, background_color=None, message=f"Level: {level.level}")
     bullet_speed = 2
     level.level = 1
     spaceship.lifes = 1
+    game_text.delay_message(screen=screen, x_pos=30, y_pos=70, font_size=30, background_color=None, message=f"Level: {level.level}")
     aliens.reset_game_aliens(screen=screen)
     spaceship.reset_spaceship()
     time_tracker.start_game()
