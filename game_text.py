@@ -2,7 +2,6 @@ import pygame
 
 class GameText():
     def __init__(self) -> None:
-        self.level = 1
         self.font = 'freesansbold.ttf'
 
         

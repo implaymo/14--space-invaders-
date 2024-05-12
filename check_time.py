@@ -4,8 +4,7 @@ import random
 class TimeTracker():
     def __init__(self) -> None:
         self.start_time = None
-        self.random_shooting_timing = random.uniform(1.0, 4.0)
-        self.threshold = self.random_shooting_timing
+        self.threshold = random.uniform(0.5, 1.5)
         
     def start_game(self):
         self.start_time = time.perf_counter()
@@ -18,6 +17,8 @@ class TimeTracker():
     def is_game_live(self):
         elapsed_time = self.get_elapsed_time()
         return elapsed_time >= self.threshold
-        
+    
     def reset_threshold(self):
-        self.threshold = 2
+        self.threshold = random.uniform(0.5, 1.5)
+
+        

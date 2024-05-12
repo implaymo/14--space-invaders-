@@ -9,6 +9,7 @@ from start_menu import StartMenu
 from level import Level
 from game_over_menu import GameOverMenu
 import sys
+import random
 
 def move_bullet(total_bullets_list, direction):
     global bullet_hit_target
@@ -32,7 +33,7 @@ def spawn_alien_bullets():
             bullet.add_bullet(aliens.total_aliens_bullets)
             bullet_was_shot = True
             if bullet_was_shot:
-                time_tracker.threshold += time_tracker.random_shooting_timing
+                time_tracker.threshold += random.uniform(0.2, 3.0)
                 bullet_was_shot = False
     else:
         aliens.wiped = True
@@ -52,8 +53,7 @@ def increase_bullet_speed():
 
 def level_up():
     """Resets variables and increases some variables to make game harder"""
-    game_text.delay_message(screen=screen, x_pos=180, y_pos=180,font_size=40, message=f"LEVEL UP {level.level + 1}!")
-    time_tracker.reset_threshold()
+    game_text.delay_message(screen=screen, x_pos=190, y_pos=180,font_size=40, message=f"LEVEL UP {level.level + 1}!")
     aliens.clear_aliens()
     aliens.clear_bullets()
     aliens.reset_aliens()
@@ -61,13 +61,13 @@ def level_up():
     spaceship.reset_spaceship_pos()
     level.increase_level()
     time_tracker.start_game()
+    time_tracker.reset_threshold()
     aliens.wiped = False
 
 
 def restart_same_level():
     """Resets variables and keeps the game at the same level the user was playing"""
     game_text.delay_message(screen=screen, x_pos=220, y_pos=60, font_size=25, message=f"Lifes left: {spaceship.lifes}")
-    time_tracker.reset_threshold()
     aliens.clear_aliens()
     aliens.clear_bullets()
     aliens.store_aliens()
@@ -75,13 +75,14 @@ def restart_same_level():
     aliens.move_aliens()
     spaceship.reset_spaceship_pos()
     time_tracker.start_game()
+    time_tracker.reset_threshold()
     aliens.wiped = False
     
 def reset_game():
     """Reset all game variables"""
     global game_state
     level.level = 1
-    game_text.delay_message(screen=screen, x_pos=250, y_pos=70, font_size=30, background_color=None, message=f"Level: {level.level}")
+    game_text.delay_message(screen=screen, x_pos=30, y_pos=70, font_size=30, background_color=None, message=f"Level: {level.level}")
     spaceship.lifes = 1
     time_tracker.reset_threshold()
     aliens.clear_aliens()
@@ -96,7 +97,10 @@ def reset_game():
 
 def game_over():
     """End Game Message"""
-    game_text.delay_message(screen=screen, x_pos=170, y_pos=200, font_size=40, message="GAME OVER")
+    game_text.delay_message(screen=screen, x_pos=180, y_pos=100, font_size=40, message="GAME OVER")
+    GameOverMenu(screen=screen, restart_button=restart_button.create_button(screen=screen,font_size=25, text_color="green", bg_color="blue", text="Try Again"), 
+                                      quit_button=quit_button.create_button(screen=screen, font_size=25, text_color="black", bg_color="red", text="Quit Game"))
+    
 
   
 # GAME SETUP   
@@ -108,7 +112,7 @@ background_image = pygame.image.load('images/space_background.jpg')
 clock = pygame.time.Clock()
 pygame.display.set_caption("Space Invaders")
 
-spaceship = SpaceShipImg(lifes=1)
+spaceship = SpaceShipImg(lifes=3)
 aliens = AlienImg()
 time_tracker = TimeTracker()
 game_text = GameText()
@@ -144,7 +148,7 @@ while running:
                         sys.exit()
                 
     if game_state == "start_menu":
-        start_menu = StartMenu(screen=screen, start_button=start_button.image_button(screen, path="start_button.png"))
+        StartMenu(screen=screen, start_button=start_button.image_button(screen, path="start_button.png"))
         
     elif game_state == "game":     
         key = pygame.key.get_pressed()
@@ -174,7 +178,6 @@ while running:
         if spaceship.check_collision_bullet(total_aliens_bullets=aliens.total_aliens_bullets):
             bullet_hit_target = True
             if spaceship.lifes < 1:
-                game_over()
                 game_state = "game_over"
             else:
                 restart_same_level()
@@ -184,7 +187,6 @@ while running:
         clock.tick(60)
     
     elif game_state == "game_over":
-        game_over_menu = GameOverMenu(screen=screen, restart_button=restart_button.create_button(screen=screen,font_size=25, text_color="green", bg_color="blue", text="Try Again"), 
-                                      quit_button=quit_button.create_button(screen=screen, font_size=25, text_color="green", bg_color="blue", text="Quit Game"))
+        game_over()
 
 pygame.quit()
