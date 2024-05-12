@@ -4,7 +4,7 @@ import random
 class TimeTracker():
     def __init__(self) -> None:
         self.start_time = None
-        self.threshold = random.uniform(0.5, 1.5)
+        self.threshold = random.uniform(0.2, 1.5)
         
     def start_game(self):
         self.start_time = time.perf_counter()

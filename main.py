@@ -31,10 +31,8 @@ def spawn_alien_bullets():
         if time_tracker.is_game_live():
             bullet = Bullet(bullet_x_pos=random_alien.alien_x_pos, bullet_y_pos=random_alien.alien_y_pos , number_of_bullets=1000, is_alien=True)
             bullet.add_bullet(aliens.total_aliens_bullets)
-            bullet_was_shot = True
-            if bullet_was_shot:
-                time_tracker.threshold += random.uniform(0.2, 3.0)
-                bullet_was_shot = False
+            time_tracker.threshold += random.uniform(0.2, 3.0)
+
     else:
         aliens.wiped = True
         if aliens.wiped:
@@ -75,7 +73,8 @@ def restart_same_level():
     
 def reset_game():
     """Reset all game variables"""
-    global game_state
+    global game_state, bullet_speed
+    bullet_speed = 2
     level.level = 1
     game_text.delay_message(screen=screen, x_pos=30, y_pos=70, font_size=30, background_color=None, message=f"Level: {level.level}")
     time_tracker.reset_threshold()
