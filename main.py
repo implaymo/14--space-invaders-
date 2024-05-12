@@ -54,24 +54,21 @@ def increase_bullet_speed():
 def level_up():
     """Resets variables and increases some variables to make game harder"""
     game_text.delay_message(screen=screen, x_pos=190, y_pos=180,font_size=40, message=f"LEVEL UP {level.level + 1}!")
-    aliens.clear_aliens()
+    aliens.next_level_aliens()
     aliens.clear_bullets()
-    aliens.reset_aliens()
     increase_bullet_speed()
     spaceship.reset_spaceship_pos()
-    level.increase_level()
     time_tracker.start_game()
     time_tracker.reset_threshold()
+    level.increase_level()
     aliens.wiped = False
 
 
 def restart_same_level():
     """Resets variables and keeps the game at the same level the user was playing"""
     game_text.delay_message(screen=screen, x_pos=220, y_pos=60, font_size=25, message=f"Lifes left: {spaceship.lifes}")
-    aliens.clear_aliens()
     aliens.clear_bullets()
-    aliens.store_aliens()
-    aliens.create_aliens(screen=screen)
+    aliens.reset_aliens_pos(aliens.all_aliens)
     aliens.move_aliens()
     spaceship.reset_spaceship_pos()
     time_tracker.start_game()
@@ -112,7 +109,7 @@ background_image = pygame.image.load('images/space_background.jpg')
 clock = pygame.time.Clock()
 pygame.display.set_caption("Space Invaders")
 
-spaceship = SpaceShipImg(lifes=3)
+spaceship = SpaceShipImg(lifes=2)
 aliens = AlienImg()
 time_tracker = TimeTracker()
 game_text = GameText()
@@ -164,7 +161,6 @@ while running:
         aliens.create_aliens(screen=screen)
         aliens.move_aliens()
         
-
         move_bullet(spaceship.total_spaceship_bullets, direction=-1)
         move_bullet(aliens.total_aliens_bullets, direction=1)
         
