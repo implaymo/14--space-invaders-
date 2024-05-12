@@ -17,7 +17,7 @@ def move_bullet(total_bullets_list, direction):
         if bullet_hit_target:
             total_bullets_list.pop(total_bullets_list.index(bullet))
             bullet_hit_target = False
-        if bullet.bullet_y_pos > 0:
+        if bullet.bullet_y_pos > 0 and bullet.bullet_y_pos < 400:
             bullet.bullet_y_pos += direction * bullet_speed
             bullet.create_bullet(screen)
         else:
@@ -29,7 +29,7 @@ def spawn_alien_bullets():
     random_alien = aliens.choose_alien_shot()
     if random_alien is not None:
         if time_tracker.is_game_live():
-            bullet = Bullet(bullet_x_pos=random_alien.alien_x_pos, bullet_y_pos=random_alien.alien_y_pos , number_of_bullets=1000, is_alien=True)
+            bullet = Bullet(bullet_x_pos=random_alien.alien_x_pos, bullet_y_pos=random_alien.alien_y_pos , number_of_bullets=5, is_alien=True)
             bullet.add_bullet(aliens.total_aliens_bullets)
             time_tracker.threshold += random.uniform(0.2, 3.0)
 
