@@ -19,6 +19,6 @@ class TimeTracker():
         return elapsed_time >= self.threshold
     
     def reset_threshold(self):
-        self.threshold = random.uniform(0.5, 1.5)
+        self.threshold = random.uniform(0.2, 1.5)
 
         

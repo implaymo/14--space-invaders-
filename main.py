@@ -10,6 +10,7 @@ from level import Level
 from game_over_menu import GameOverMenu
 import sys
 import random
+from sound import GameSounds
 
 def move_bullet(total_bullets_list, direction):
     global bullet_hit_target
@@ -36,6 +37,8 @@ def spawn_alien_bullets():
         if time_tracker.is_game_live():
             bullet = Bullet(bullet_x_pos=random_alien.alien_x_pos, bullet_y_pos=random_alien.alien_y_pos , number_of_bullets=5, is_alien=True)
             bullet.add_bullet(aliens.total_aliens_bullets)
+            alien_gun = GameSounds("./sounds/aliens_shoting_sound.wav")
+            alien_gun.game_sound.play()
             time_tracker.threshold += random.uniform(0.2, 3.0)
 
     else:
@@ -49,6 +52,11 @@ def spawn_spaceship_bullets():
     if key[pygame.K_SPACE]:
         bullet = Bullet(bullet_x_pos=mid_of_spaceship, bullet_y_pos=top_of_spaceship, number_of_bullets=1, is_alien=False)
         bullet.add_bullet(spaceship.total_spaceship_bullets)
+        spaceship_gun = GameSounds("./sounds/spaceship_shoting_sound.wav")
+        spaceship_gun.game_sound.play()
+
+
+        
 
 
 def increase_bullet_speed():
@@ -79,14 +87,14 @@ def restart_same_level():
 def reset_game():
     """Reset all game variables"""
     global game_state, bullet_speed
+    game_text.delay_message(screen=screen, x_pos=30, y_pos=70, font_size=30, background_color=None, message=f"Level: {level.level}")
     bullet_speed = 2
     level.level = 1
-    game_text.delay_message(screen=screen, x_pos=30, y_pos=70, font_size=30, background_color=None, message=f"Level: {level.level}")
-    time_tracker.reset_threshold()
-    aliens.reset_game_aliens(screen=screen)
     spaceship.lifes = 1
+    aliens.reset_game_aliens(screen=screen)
     spaceship.reset_spaceship()
     time_tracker.start_game()
+    time_tracker.reset_threshold()
     aliens.wiped = False
     game_state = "game"
 
@@ -122,6 +130,8 @@ bullet_hit_target = False
 bullet_speed = 2
 time_tracker.start_game()
 game_state = "start_menu"
+spaceship_gun = GameSounds("./sounds/game_music.mp3")
+spaceship_gun.game_sound.play(loops=-1)   
 
 
 # GAME MAINLOOP
@@ -145,7 +155,7 @@ while running:
     if game_state == "start_menu":
         StartMenu(screen=screen, start_button=start_button.image_button(screen, path="start_button.png"))
         
-    elif game_state == "game":     
+    elif game_state == "game":  
         key = pygame.key.get_pressed()
         screen.fill((0, 0, 0))                       
         screen.blit(background_image, (0,0))

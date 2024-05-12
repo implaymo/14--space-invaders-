@@ -134,3 +134,5 @@ class AlienImg():
     
     def reset_total_aliens_per_row(self):
         self.total_alien_per_row = 1
+        
+    
