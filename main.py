@@ -47,13 +47,18 @@ def spawn_alien_bullets():
             level_up()
 
 def spawn_spaceship_bullets():
+    global space_pressed
     top_of_spaceship = spaceship.spaceship_y_pos - 10
     mid_of_spaceship = spaceship.spaceship_x_pos + 5
     if key[pygame.K_SPACE]:
-        bullet = Bullet(bullet_x_pos=mid_of_spaceship, bullet_y_pos=top_of_spaceship, number_of_bullets=1, is_alien=False)
-        bullet.add_bullet(spaceship.total_spaceship_bullets)
-        spaceship_gun = GameSounds("./sounds/spaceship_shoting_sound.wav")
-        spaceship_gun.game_sound.play()
+        if not space_pressed: 
+            bullet = Bullet(bullet_x_pos=mid_of_spaceship, bullet_y_pos=top_of_spaceship, number_of_bullets=1, is_alien=False)
+            bullet.add_bullet(spaceship.total_spaceship_bullets)
+            spaceship_gun = GameSounds("./sounds/spaceship_shoting_sound.wav")
+            spaceship_gun.game_sound.play()
+            space_pressed = True  
+    else:
+        space_pressed = False 
 
 
         
@@ -127,6 +132,7 @@ restart_button =  Button(width=100, height=30, x_pos=250, y_pos=220)
 
 aliens.store_aliens()
 bullet_hit_target = False
+space_pressed = False
 bullet_speed = 2
 time_tracker.start_game()
 game_state = "start_menu"
