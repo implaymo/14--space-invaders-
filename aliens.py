@@ -81,6 +81,23 @@ class AlienImg():
         self.increase_rows()
         self.incraese_y_pos()
         self.store_aliens()
+    
+    def restart_level_aliens(self):
+        self.clear_aliens()
+        self.clear_bullets()
+        self.reset_x_pos()
+        self.store_aliens()
+        self.move_aliens()
+    
+    def reset_game_aliens(self, screen):
+        self.reset_number_rows()
+        self.reset_total_aliens_per_row()
+        self.clear_aliens()
+        self.clear_bullets()
+        self.reset_y_pos()
+        self.store_aliens()
+        self.create_aliens(screen=screen)
+        self.move_aliens()
         
     def increase_aliens(self):
         if self.total_alien_per_row < 15:

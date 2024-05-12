@@ -9,12 +9,12 @@ class Button():
         self.y_pos = y_pos
 
     def image_button(self, screen, path):
-        self.image_path = os.path.join("images", path)
-        self.image = pygame.image.load(self.image_path).convert_alpha()
-        self.image_resized = pygame.transform.scale(self.image, (self.width, self.height))
-        self.image_rect = self.image_resized.get_rect(center=(self.x_pos + self.width / 2, self.y_pos + self.height / 2))
-        self.image_rect.topleft = (self.x_pos, self.y_pos)
-        screen.blit(self.image_resized, (self.x_pos, self.y_pos))
+        self.button_path = os.path.join("images", path)
+        self.button_image = pygame.image.load(self.button_path).convert_alpha()
+        self.button_resized = pygame.transform.scale(self.button_image, (self.width, self.height))
+        self.button_rect = self.button_resized.get_rect(center=(self.x_pos + self.width / 2, self.y_pos + self.height / 2))
+        self.button_rect.topleft = (self.x_pos, self.y_pos)
+        screen.blit(self.button_resized, (self.x_pos, self.y_pos))
         
     def create_button(self, screen, text_color, bg_color, text, font_size=15):
         self.font = pygame.font.Font(None, font_size)

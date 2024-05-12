@@ -57,8 +57,7 @@ def level_up():
     game_text.delay_message(screen=screen, x_pos=190, y_pos=180,font_size=40, message=f"LEVEL UP {level.level + 1}!")
     aliens.next_level_aliens()
     increase_bullet_speed()
-    spaceship.reset_x_pos()
-    spaceship.clear_bullets()
+    spaceship.reset_spaceship()
     time_tracker.start_game()
     time_tracker.reset_threshold()
     level.increase_level()
@@ -68,13 +67,8 @@ def level_up():
 def restart_same_level():
     """Resets variables and keeps the game at the same level the user was playing"""
     game_text.delay_message(screen=screen, x_pos=220, y_pos=60, font_size=25, message=f"Lifes left: {spaceship.lifes}")
-    aliens.clear_aliens()
-    aliens.clear_bullets()
-    aliens.reset_x_pos()
-    aliens.store_aliens()
-    aliens.move_aliens()
-    spaceship.reset_x_pos()
-    spaceship.clear_bullets()
+    aliens.restart_level_aliens()
+    spaceship.reset_spaceship()
     time_tracker.start_game()
     time_tracker.reset_threshold()
     aliens.wiped = False
@@ -84,18 +78,10 @@ def reset_game():
     global game_state
     level.level = 1
     game_text.delay_message(screen=screen, x_pos=30, y_pos=70, font_size=30, background_color=None, message=f"Level: {level.level}")
-    spaceship.lifes = 1
     time_tracker.reset_threshold()
-    aliens.reset_number_rows()
-    aliens.reset_total_aliens_per_row()
-    aliens.clear_aliens()
-    aliens.clear_bullets()
-    aliens.reset_y_pos()
-    aliens.store_aliens()
-    aliens.create_aliens(screen=screen)
-    aliens.move_aliens()
-    spaceship.reset_x_pos()
-    spaceship.clear_bullets()
+    aliens.reset_game_aliens(screen=screen)
+    spaceship.lifes = 1
+    spaceship.reset_spaceship()
     time_tracker.start_game()
     aliens.wiped = False
     game_state = "game"
@@ -117,7 +103,7 @@ background_image = pygame.image.load('images/space_background.jpg')
 clock = pygame.time.Clock()
 pygame.display.set_caption("Space Invaders")
 
-spaceship = SpaceShipImg(lifes=2)
+spaceship = SpaceShipImg(lifes=3)
 aliens = AlienImg()
 time_tracker = TimeTracker()
 game_text = GameText()
@@ -144,7 +130,7 @@ while running:
         if game_state == "start_menu" or game_state == "game_over":
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if game_state == "start_menu":
-                    if start_button.image_rect.collidepoint(event.pos):
+                    if start_button.button_rect.collidepoint(event.pos):
                         game_state = "game"
                 elif game_state == "game_over":
                     if restart_button.button_rect.collidepoint(event.pos):
