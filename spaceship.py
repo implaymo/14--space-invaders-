@@ -50,7 +50,7 @@ class SpaceShipImg():
                 self.lose_life()
                 return True
             
-    def reset_spaceship_pos(self):
+    def reset_x_pos(self):
         self.spaceship_x_pos = 270
         
     def clear_bullets(self):

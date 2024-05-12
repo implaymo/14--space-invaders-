@@ -106,18 +106,12 @@ class AlienImg():
     def clear_aliens(self):
         self.all_aliens = []
 
-    def reset_x_pos(self, all_aliens):
-        for row in all_aliens:
-            row[0].alien_x_pos = self.alien_x_pos
-            for i in range(1, len(row)):
-                row[i].alien_x_pos = row[i-1].alien_x_pos + 20 
-                
-    def reset_y_pos(self, all_aliens):
-        for row in all_aliens:
-            row[0].alien_y_pos = self.alien_y_pos
-            for i in range(1, len(row)):
-                row[i].alien_y_pos = row[i-1].alien_y_pos + 20 
-                
+    def reset_x_pos(self):
+        self.alien_x_pos = 20
+    
+    def reset_y_pos(self):
+        self.alien_y_pos = 20
+        
     def reset_number_rows(self):
         self.number_rows = 1
     
