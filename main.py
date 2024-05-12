@@ -21,7 +21,12 @@ def move_bullet(total_bullets_list, direction):
             bullet.bullet_y_pos += direction * bullet_speed
             bullet.create_bullet(screen)
         else:
-            total_bullets_list.pop(total_bullets_list.index(bullet))
+            try:
+                total_bullets_list.pop(total_bullets_list.index(bullet))
+            except ValueError:
+                print("Bullet missing")
+            else:
+                continue
 
 
 def spawn_alien_bullets():
