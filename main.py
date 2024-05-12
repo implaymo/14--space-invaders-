@@ -37,7 +37,8 @@ def spawn_alien_bullets():
                 bullet_was_shot = False
     else:
         aliens.wiped = True
-        level_up()
+        if aliens.wiped:
+            level_up()
 
 def spawn_spaceship_bullets():
     top_of_spaceship = spaceship.spaceship_y_pos - 10
@@ -55,9 +56,9 @@ def level_up():
     """Resets variables and increases some variables to make game harder"""
     game_text.delay_message(screen=screen, x_pos=190, y_pos=180,font_size=40, message=f"LEVEL UP {level.level + 1}!")
     aliens.next_level_aliens()
-    aliens.clear_bullets()
     increase_bullet_speed()
     spaceship.reset_spaceship_pos()
+    spaceship.clear_bullets()
     time_tracker.start_game()
     time_tracker.reset_threshold()
     level.increase_level()
@@ -67,10 +68,12 @@ def level_up():
 def restart_same_level():
     """Resets variables and keeps the game at the same level the user was playing"""
     game_text.delay_message(screen=screen, x_pos=220, y_pos=60, font_size=25, message=f"Lifes left: {spaceship.lifes}")
-    aliens.clear_bullets()
-    aliens.reset_aliens_pos(aliens.all_aliens)
+    aliens.clear_aliens()
+    aliens.store_aliens()
+    aliens.reset_x_pos(aliens.all_aliens)
     aliens.move_aliens()
     spaceship.reset_spaceship_pos()
+    spaceship.clear_bullets()
     time_tracker.start_game()
     time_tracker.reset_threshold()
     aliens.wiped = False
@@ -82,12 +85,15 @@ def reset_game():
     game_text.delay_message(screen=screen, x_pos=30, y_pos=70, font_size=30, background_color=None, message=f"Level: {level.level}")
     spaceship.lifes = 1
     time_tracker.reset_threshold()
+    aliens.reset_number_rows()
+    aliens.reset_total_aliens_per_row()
     aliens.clear_aliens()
     aliens.clear_bullets()
     aliens.store_aliens()
     aliens.create_aliens(screen=screen)
     aliens.move_aliens()
     spaceship.reset_spaceship_pos()
+    spaceship.clear_bullets()
     time_tracker.start_game()
     aliens.wiped = False
     game_state = "game"

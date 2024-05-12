@@ -76,7 +76,7 @@ class AlienImg():
 
     def next_level_aliens(self):
         self.clear_aliens()
-        self.clear_bullets
+        self.clear_bullets()
         self.increase_aliens()
         self.increase_rows()
         self.incraese_y_pos()
@@ -106,5 +106,20 @@ class AlienImg():
     def clear_aliens(self):
         self.all_aliens = []
 
-    def reset_aliens_pos(self, all_aliens):
-        pass
+    def reset_x_pos(self, all_aliens):
+        for row in all_aliens:
+            row[0].alien_x_pos = self.alien_x_pos
+            for i in range(1, len(row)):
+                row[i].alien_x_pos = row[i-1].alien_x_pos + 20 
+                
+    def reset_y_pos(self, all_aliens):
+        for row in all_aliens:
+            row[0].alien_y_pos = self.alien_y_pos
+            for i in range(1, len(row)):
+                row[i].alien_y_pos = row[i-1].alien_y_pos + 20 
+                
+    def reset_number_rows(self):
+        self.number_rows = 1
+    
+    def reset_total_aliens_per_row(self):
+        self.total_alien_per_row = 1

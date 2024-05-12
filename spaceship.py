@@ -52,3 +52,6 @@ class SpaceShipImg():
             
     def reset_spaceship_pos(self):
         self.spaceship_x_pos = 270
+        
+    def clear_bullets(self):
+        self.total_spaceship_bullets = []
