@@ -87,7 +87,6 @@ class AlienImg():
         self.clear_bullets()
         self.reset_x_pos()
         self.store_aliens()
-        self.move_aliens()
     
     def reset_game_aliens(self, screen):
         self.reset_number_rows()

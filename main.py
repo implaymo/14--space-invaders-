@@ -11,6 +11,7 @@ from game_over_menu import GameOverMenu
 import sys
 import random
 from sound import GameSounds
+from highest_level import HighLevel
 
 def move_bullet(total_bullets_list, direction):
     global bullet_hit_target
@@ -125,6 +126,7 @@ aliens = AlienImg()
 time_tracker = TimeTracker()
 game_text = GameText()
 level = Level()
+highest_level = HighLevel()
 
 start_button = Button(width=150, height=70, x_pos=225, y_pos=150)
 quit_button = Button(width=100, height=30, x_pos=250, y_pos=170)
@@ -145,17 +147,21 @@ running = True
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
+            highest_level.load_highscore(level=level.level)
             running = False
         
         if game_state == "start_menu" or game_state == "game_over":
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if game_state == "start_menu":
                     if start_button.button_rect.collidepoint(event.pos):
+                        highest_level.load_highscore(level=level.level)
                         game_state = "game"
                 elif game_state == "game_over":
                     if restart_button.button_rect.collidepoint(event.pos):
+                        highest_level.load_highscore(level=level.level)
                         reset_game()
                     elif quit_button.button_rect.collidepoint(event.pos):
+                        highest_level.load_highscore(level=level.level)
                         sys.exit()
                 
     if game_state == "start_menu":
@@ -166,8 +172,10 @@ while running:
         screen.fill((0, 0, 0))                       
         screen.blit(background_image, (0,0))
         
-        game_text.show_game_info(screen=screen, x_pos=10, y_pos=380, font_size=15, message=f"Lifes: {spaceship.lifes}")
-        game_text.show_game_info(screen=screen, x_pos=10, y_pos=360, font_size=15, message=f"Level: {level.level}")
+        game_text.show_game_info(screen=screen, x_pos=10, y_pos=360, font_size=15, message=f"Lifes: {spaceship.lifes}")
+        game_text.show_game_info(screen=screen, x_pos=10, y_pos=380, font_size=15, message=f"Level: {level.level}")
+        game_text.show_game_info(screen=screen, x_pos=70, y_pos=380, font_size=15, message=f"Highscore: {highest_level.high_score}")
+
         
         spaceship.create_spaceship(spaceship=spaceship, screen=screen)
         spaceship.move_spaceship(key=key)
