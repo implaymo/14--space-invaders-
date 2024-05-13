@@ -67,7 +67,11 @@ def spawn_spaceship_bullets():
 
 def increase_bullet_speed():
     global bullet_speed
-    bullet_speed += 1
+    if bullet_speed < 13:
+        bullet_speed += 1
+    else: 
+        bullet_speed = 13
+
 
 def level_up():
     """Resets variables and increases some variables to make game harder"""
@@ -142,32 +146,33 @@ spaceship_gun = GameSounds("./sounds/game_music.mp3")
 spaceship_gun.game_sound.play(loops=-1)   
 
 
+
 # GAME MAINLOOP
 running = True
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            highest_level.load_highscore(level=level.level)
             running = False
+        
+        if game_state in ["start_menu", "game_over", "game"]:
+            highest_level.load_highscore(level=level.level)
+
         
         if game_state == "start_menu" or game_state == "game_over":
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if game_state == "start_menu":
                     if start_button.button_rect.collidepoint(event.pos):
-                        highest_level.load_highscore(level=level.level)
                         game_state = "game"
                 elif game_state == "game_over":
                     if restart_button.button_rect.collidepoint(event.pos):
-                        highest_level.load_highscore(level=level.level)
                         reset_game()
                     elif quit_button.button_rect.collidepoint(event.pos):
-                        highest_level.load_highscore(level=level.level)
                         sys.exit()
                 
     if game_state == "start_menu":
         StartMenu(screen=screen, start_button=start_button.image_button(screen, path="start_button.png"))
         
-    elif game_state == "game":  
+    elif game_state == "game":
         key = pygame.key.get_pressed()
         screen.fill((0, 0, 0))                       
         screen.blit(background_image, (0,0))
