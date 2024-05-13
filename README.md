@@ -1,4 +1,4 @@
-# SpaceInvaders Game
+# Space Invaders Game
 
 ## Overview
 SpaceInvaders is a classic arcade-style game where players control a spaceship to defend against waves of aliens. The objective is to survive as long as possible by destroying incoming aliens while avoiding their projectiles.
