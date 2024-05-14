@@ -3,12 +3,17 @@
 ## Overview
 Space Invaders is a classic arcade-style game where players control a spaceship to defend against waves of aliens. The objective is to survive as long as possible by destroying incoming aliens while avoiding their projectiles.
 
+![Screenshot 1](/screenshots/start_game.png)
+
 ## Features
 - **Increasing Difficulty**: As the player progresses through levels, the number of aliens and their speed increases, providing a greater challenge.
 - **Dynamic Gameplay**: The number of rows in aliens increases by 1 with each level, creating a more complex playing field.
 - **Lives System**: The player's spaceship has a limited number of lives. Getting hit by an alien's projectile reduces the number of lives remaining.
 - **Scoring**: The game only tracks the highscore, which increases with each successive level achieved.
 - **Level Progression**: Upon wiping out all aliens on the screen, the player advances to the next level, where the difficulty increases.
+
+![Screenshot 1](/screenshots/game.png)
+
 
 ## Controls
 - **Arrow Keys**: Move the spaceship left or right.
@@ -19,6 +24,8 @@ Space Invaders is a classic arcade-style game where players control a spaceship 
 - **Spaceship**: The player's spaceship is positioned at the bottom of the screen and can move horizontally to avoid alien projectiles. It can shoot bullets to destroy aliens. When hit by a bullet, a life is lost.
 - **Level Progression**: Each level presents an increasing number of aliens and rows, as well as faster-moving projectiles.
 - **Game Over**: The game ends when the player's spaceship loses all lives. The final score is displayed along with an option to restart the game.
+
+![Screenshot 1](/screenshots/game_over.png)
 
 ## Getting Started
 To run the game, follow these steps:
